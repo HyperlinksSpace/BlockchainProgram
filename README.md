@@ -16,7 +16,7 @@ Contracts of this layer are based on the existing standard of TON NFT Editable C
 
 ### TDBs
 
-This smart contract forms the top layer of the whole smart-contract network. It performs various functions related to managing collections of tokens. Those functions allow us to effectively manage all the smart-contracts in the network. Let’s stipulate it’s main functions:
+This smart contract forms the top layer of this smart-contract's network. It performs various functions related to managing collections of tokens. Those functions allow us to effectively manage all the smart-contracts in the network. Let’s stipulate it’s main functions:
 
 * It keeps track of some important information about the contract, such as the sequence number, public key, owner's address, the index of the next collection, and a dictionary of collections. 
 * The contract allows the owner to change the ownership of the contract to a new address. 
@@ -47,17 +47,17 @@ TDBt provides basic features to manage smart-contracts within your app.
 
 There are three ways to mint new smart-contracts to the network of your TDA
 
-* Collection Deployment | [see code ↗](https://github.com/somewallet/ton_nft_dapp/blob/212e9f9c8f2d832ebfe7d2224e4599a512eedbbb/contracts/nft_dapp.fc#L116) | – function of TDBs that allows you to mint new collections that will be put under the governance of TDBs.
+* Collection Deployment | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L89) | – function of TDBs that allows you to mint new collections that will be put under the governance of TDBs.
 
-* NFT Item Deployment | [see code ↗](https://github.com/somewallet/ton_nft_dapp/blob/212e9f9c8f2d832ebfe7d2224e4599a512eedbbb/contracts/nft_dapp.fc#L134) | – You can deploy individual NFT Items in collections through TDBs. Message will pass through TDBs, then will be forwarded to the corresponding NFT Collection, that in its term will send a message to the empty address that will mint a new smart-contract of NFT.
+* NFT Item Deployment | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L107) | – You can deploy individual NFT Items in collections through TDBs. Message will pass through TDBs, then will be forwarded to the corresponding NFT Collection, that in its term will send a message to the empty address that will mint a new smart-contract of NFT.
 
-* Batch NFT Deploy | [see code ↗](https://github.com/somewallet/ton_nft_dapp/blob/212e9f9c8f2d832ebfe7d2224e4599a512eedbbb/contracts/nft_dapp.fc#L152) | – You can deploy multiple NFT with a single transaction.
+* Batch NFT Deploy | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L125) | – You can deploy multiple NFT with a single transaction.
 
 #### Change code of smart-contracts:
 
 This methods will help you to upgrade the smart-contracts in your TDA:
 
-* Edit dApp Code | [see code ↗](https://github.com/somewallet/ton_nft_dapp/blob/212e9f9c8f2d832ebfe7d2224e4599a512eedbbb/contracts/nft_dapp.fc#L422) | – You can upgrade the code of the main smart-contract (TDBs).
+* Edit dApp Code | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L67) | – You can upgrade the code of the main smart-contract (TDBs).
 
 * Edit Collection Code (coming soon)
 
@@ -67,7 +67,7 @@ This methods will help you to upgrade the smart-contracts in your TDA:
 
 You can even implement functions that will allow you to burn tokens, such as:
 
-* Destroy SBT Item | [see code ↗](https://github.com/somewallet/ton_nft_dapp/blob/212e9f9c8f2d832ebfe7d2224e4599a512eedbbb/contracts/nft_dapp.fc#LL215C1-L215C1) | – You can burn SBT tokens in collections of SBT type. Message will pass through TDBs, then will be forwarded to the corresponding NFT Collection, that in its term will send a message to SBT Item to be burned.
+* Destroy SBT Item | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L188) | – You can burn SBT tokens in collections of SBT type. Message will pass through TDBs, then will be forwarded to the corresponding NFT Collection, that in its term will send a message to SBT Item to be burned.
 
 * Delete dApp (coming soon)
 
@@ -87,17 +87,17 @@ You can mint a new smart-contract to blockchain to store new data. So you can us
 
 You can take advantage of the Editable NFT Standard to update data in smart-contract by just editing it. You can use following methods for that purpose:
 
-* Edit Collection Content | [see code ↗](https://github.com/somewallet/ton_nft_dapp/blob/212e9f9c8f2d832ebfe7d2224e4599a512eedbbb/contracts/nft_dapp.fc#L168) | – You can update content and metadata of NFT Collections through TDBs. It will forward the message to the corresponding collection.
+* Edit Collection Content | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L141) | – You can update content and metadata of NFT Collections through TDBs. It will forward the message to the corresponding collection.
 
-* Edit NFT Item Content | [see code ↗] | – You can update content and metadata of NFT through TDBs. It will forward the message to the corresponding collection and collection, in its term will forward the message to the NFT Item.
+* Edit NFT Item Content | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L174) | – You can update content and metadata of NFT through TDBs. It will forward the message to the corresponding collection that in its term will forward the message to the NFT Item.
 
 #### Retrieve Data
 
-* Use TDAs Get-Methods | [see code ↗](https://github.com/somewallet/ton_nft_dapp/blob/212e9f9c8f2d832ebfe7d2224e4599a512eedbbb/contracts/nft_dapp.fc#L438) | – In TDBt you will find methods that will allow you to get the current sequence number, get TDA data, get deployed collections addresses.
+* Use TDAs Get-Methods | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L368) | – In TDBt you will find methods that will allow you to get the current sequence number, get TDA data, get deployed collections addresses.
 
-* Use Collection Get-Methods | [see code ↗](https://github.com/somewallet/ton_nft_dapp/blob/212e9f9c8f2d832ebfe7d2224e4599a512eedbbb/contracts/customers_collection.fc#L147) | – For example, in collections of freelancers of TDBt you will find methods that will allow you to collect data, get NFT addresses by index, get royalty params, get NFT content.
+* Use Collection Get-Methods | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/customers_collection.fc#L149) | – For example, in collections of freelancers you will find methods that will allow you to collect data, get NFT addresses by index, get royalty params, get NFT content.
 
-* Use NFT Get-Methods | [see code ↗](https://github.com/somewallet/ton_nft_dapp/blob/212e9f9c8f2d832ebfe7d2224e4599a512eedbbb/contracts/customers_collection.fc#L147) | – You can get NFT Content or the address of the editor by running NFT get-methods inherited from the NFT Standart.
+* Use NFT Get-Methods | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/customers_nft.fc#L219) | – You can get NFT Content or the address of the editor by running NFT get-methods inherited from the NFT Standart.
 
 #### Process Data (Coming soon)
 
@@ -109,9 +109,9 @@ Owners of TDA have additional functionality and opportunities to maintain, scale
 
 Here are essential functions and opportunities for owners of the app:
 
-* Change dApp Owner | [see code ↗](https://github.com/somewallet/ton_nft_dapp/blob/212e9f9c8f2d832ebfe7d2224e4599a512eedbbb/contracts/nft_dapp.fc#L75) | – You can change the owner of the TDA, for example, you can migrate from ordinary wallet to multisig wallet, or DAO smart-contract.
+* Change dApp Owner | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L48) | – You can change the owner of the TDA, for example, you can migrate from ordinary wallet to multisig wallet, or DAO smart-contract.
 
-* Withdraw Funds | [see code ↗](https://github.com/somewallet/ton_nft_dapp/blob/212e9f9c8f2d832ebfe7d2224e4599a512eedbbb/contracts/nft_dapp.fc#L84) | – You can withdraw funds to the address that is owner of the TDA
+* Withdraw Funds | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L57) | – You can withdraw funds to the address that is owner of the TDA
 Manage TDA Collectively – You can make a multisig or DAO smart-contract.
 
 #### Upgrade TDA
@@ -122,8 +122,6 @@ You can upgrade your app using methods described in p. 3.1.2.
 
 You can build a serverless frontend for your TDA, using TON SDK’s. For example, you can use TON Connect demo app as a starting JS template.
 
-
-
 ### TDA Concept
 
 Tokenized Decentralized App (TDA) is a novel approach that combines the advantages of Tokenized Decentralized Backend (TDB) with a serverless frontend. The core idea behind TDA is to enable seamless app functionality by extracting all necessary information from the TDB smart-contract network. By leveraging the capabilities of blockchain and smart contracts, TDA empowers developers to build robust, transparent, and decentralized applications.
@@ -132,7 +130,7 @@ To illustrate the concept, let's consider an example of a freelance marketplace.
 
 The interaction between the TDA and smart contracts is bidirectional. When users engage in various processes within the app, they can trigger changes in the corresponding smart contracts by sending messages or transactions. For instance, accepting an order or updating its status can be accomplished by interacting with the smart contract representing that specific order. These actions are transparent, auditable, and secure due to the immutability and consensus mechanisms of the underlying blockchain network.
 
-By tokenizing the app's functionalities and integrating them with the blockchain infrastructure, TDA introduces several benefits. Firstly, it ensures data integrity and immutability since the information is stored on the blockchain. This enhances trust and eliminates the need for centralized intermediaries. Secondly, TDA leverages the decentralized nature of blockchain to create a resilient and censorship-resistant app ecosystem. It is no longer reliant on a single point of failure, reducing the vulnerability to hacking, downtime, or data breaches.
+By tokenizing the app's functionalities and integrating them with the blockchain infrastructure, TDA introduces several benefits. Firstly, it ensures data integrity and immutability since the information is stored in blockchain. This enhances trust and eliminates the need for centralized intermediaries. Secondly, TDA leverages the decentralized nature of blockchain to create a resilient and censorship-resistant app ecosystem. It is no longer reliant on a single point of failure, reducing the vulnerability to hacking, downtime, or data breaches.
 
 Moreover, TDA enables a more inclusive and collaborative environment by allowing users to participate directly in the governance and decision-making processes through smart contracts. Tokenized incentives can be implemented, rewarding users who contribute to the network with tokens for their computational resources, data sharing, or other valuable contributions.
 
@@ -140,8 +138,19 @@ In summary, TDA harnesses the power of Tokenized Decentralized Backend and combi
 
 ## Repository Structure
 
-The main file of interest is `nft_dapp.fc`, which contains the implementation of the TON NFT dApp contract in FunC language. The `utils/` directory provides utility functions and helper scripts used by the contract. The `imports/` directory contains imported FunC libraries for various functionalities. The `tests/` directory includes test cases and scripts to validate the contract's functionality.
+The managing file is [`nft_dapp.fc`](./contracts/nft_dapp.fc), which contains the implementation of the TON NFT dApp contract in FunC language.
 
+Key directories:
+
+- [`contracts/`](./contracts/) - Core FunC smart contracts, including the top-level dApp contract and collection/item implementations.
+	- [`contracts/imports/`](./contracts/imports/) - Shared FunC libraries and helper modules imported by contracts.
+		- [`contracts/imports/test-libs/`](./contracts/imports/test-libs/) - Helper libraries used for low-level testing and message/storage validation.
+	- [`contracts/utils/`](./contracts/utils/) - Constants, op-codes, and low-level utility definitions used across contracts.
+- [`wrappers/`](./wrappers/) - TypeScript wrappers and compile configs for deploying and interacting with contracts.
+	- [`wrappers/utils/`](./wrappers/utils/) - Wrapper-side helper modules for content building, minting, and op-code utilities.
+- [`scripts/`](./scripts/) - Deployment and operational scripts for common contract management flows.
+- [`tests/`](./tests/) - Automated tests and test utilities used to validate contract behavior.
+	- [`tests/utils/`](./tests/utils/) - Test helper utilities (for example, random key generation) reused across specs.
 
 ## Freelance-exchange implementation description
 
@@ -165,5 +174,4 @@ By using the NFT technology provided by the TON NFT dApp repository, you can cre
 
 Contributions to the TON NFT dApp contract are welcome!
 
-Read full description in Whitepaper:
-https://docs.google.com/document/d/18D-HhM01Hrp-iv0Y6r5J2hbmIly7Xvyrvi3AmJPblyw/edit#heading=h.5b97pxsnhdfe
+Read full description in [`Blackpaper.md`](./blackpaper/Blackpaper.md).
