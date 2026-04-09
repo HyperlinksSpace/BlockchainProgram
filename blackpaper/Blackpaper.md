@@ -4,17 +4,15 @@
 
 *v.1.1 · April 9, 2026 · by https://www.hyperlinks.space/, fmr. Some DAO*
 
-/
+The aim of this text is to give anyone, regardless of technical background, a comprehensive understanding of how to build a tokenized blockchain program using underlying principles and features, as well as ideas for opportunities ahead.
 
-The aim of this text is to give anyone, no matter of technical background, a comprehensive understanding of how to build a tokenized blockchain program using underlying principles and features, as well as ideas for opportunities ahead.
+*What is Blockchain Program?*
 
-*What is?*
-
-*Blockchain Program is a tokenized blockchain backend architecture on TON for building multiuser, scalable blockchain programs and services such as freelance exchanges, bulletin boards, taxi services, and more. It is built strengthening NFT, NFT Collection concepts and blockchain architecture principles. The architecture uses NFTs and Jettons as units to store, retrieve, update, and process chain's program entities. The top-level controller contract in this repository is [BlockchainProgram](./contracts/blockchain_program.fc) with `recv_internal`, which governs NFT collections and routes core management operations across the program.*
+*Blockchain Program is a tokenized smart contract architecture for building multi-user, scalable onchain programs and services: Blockchain Deals-style platforms, bulletin boards, mobility-style services, and more. The pattern is portable: you can reproduce the same layering on another chain after mapping its NFT and fungible token standards. This repository is one implementation. The architecture uses NFTs and fungible tokens as units to store, retrieve, update, and process onchain program entities. The top-level controller contract is [BlockchainProgram](./contracts/blockchain_program.fc) with `recv_internal`, which governs NFT collections and routes core management operations across the program.*
 
 ---
 
-Contents.
+**Contents**
 
 - [1 · Motivation](#1--motivation)
   - [1.2 · Goals & Values](#12--goals--values)
@@ -25,12 +23,12 @@ Contents.
     - [2.1.2 · NFT Collections layer](#212--nft-collections-layer)
     - [2.1.3 · BlockchainProgram](#213--blockchainprogram)
   - [2.4 · General Visual Representation](#24--general-visual-representation)
-  - [2.5 · How to play around with this?](#25--how-to-play-around-with-this)
+  - [2.5 · How to expand this technology?](#25--how-to-expand-this-technology)
 - [3 · Features](#3--features)
-  - [3.1 · Deal with Smart-Contracts](#31--deal-with-smart-contracts)
-    - [3.1.1 · Mint smart-contracts:](#311--mint-smart-contracts)
-    - [3.1.2 · Change code of smart-contracts:](#312--change-code-of-smart-contracts)
-    - [3.1.3 · Delete smart-contracts](#313--delete-smart-contracts)
+  - [3.1 · Deal with smart contracts](#31--deal-with-smart-contracts)
+    - [3.1.1 · Mint smart contracts](#311--mint-smart-contracts)
+    - [3.1.2 · Change code of smart contracts](#312--change-code-of-smart-contracts)
+    - [3.1.3 · Delete smart contracts](#313--delete-smart-contracts)
   - [3.2 · Deal with Data](#32--deal-with-data)
     - [3.2.1 · Store Data](#321--store-data)
     - [3.2.2 · Update Data](#322--update-data)
@@ -42,7 +40,7 @@ Contents.
     - [3.3.3 · Build UI](#333--build-ui)
 - [4 · Blockchain Program Concept](#4--blockchain-program-concept)
 - [5 · Use Cases](#5--use-cases)
-  - [5.1 · Freelance-exchange](#51--freelance-exchange)
+  - [5.1 · Blockchain Deals](#51--blockchain-deals)
   - [5.2 · Betting](#52--betting)
   - [5.3 · Taxi (Coming soon)](#53--taxi-coming-soon)
 - [6 · Opportunities](#6--opportunities)
@@ -53,7 +51,7 @@ Contents.
 
 # 1 · Motivation
 
-Main aim of this section is to reveal considerations that have led to the creation of this technology and show real benefits that it can bring to our world.
+The main aim of this section is to reveal the considerations that led to the creation of this technology and to show real benefits it can bring to our world.
 
 ## 1.2 · Goals & Values
 
@@ -69,15 +67,15 @@ Tokenization for blockchain programs can bring numerous benefits to various soci
 
 - Financial Incentives: Tokenization allows developers to be directly rewarded for their contributions through tokens or cryptocurrencies, providing new revenue streams and financial incentives.
 - Open and Collaborative Ecosystem: Blockchain architecture fosters an open and collaborative environment where developers can contribute to the project, propose improvements, and participate in decision-making processes.
-- Trust and Security: Blockchain-based blockchain programs offer enhanced security and trust as the transactions and data are stored in a distributed network, reducing the risk of single points of failure or malicious attacks.
+- Trust and Security: Blockchain-based programs offer enhanced security and trust because transactions and data are stored in a distributed network, reducing the risk of single points of failure or malicious attacks.
 
-1. Users and Consumers:
+2. Users and Consumers:
 
 - Ownership and Control: Tokenization grants users ownership rights in the program or platform, allowing them to have a say in the governance and direction of the project.
 - Transparent and Auditable: Blockchain programs built on blockchain technology provide transparency, as the code and transactions are often open and auditable, ensuring that users can verify the integrity of the system.
 - Data Privacy and Security: Blockchain architecture reduces the reliance on central authorities, giving users greater control over their personal data and reducing the risk of data breaches.
 
-1. Investors and Token Holders:
+3. Investors and Token Holders:
 
 - Access to Investment Opportunities: Tokenization allows fractional ownership, enabling broader access to investment opportunities, including early-stage projects, that were traditionally limited to venture capitalists or wealthy individuals.
 - Liquidity and Tradeability: Tokens can be traded on cryptocurrency exchanges, providing investors with liquidity and the ability to buy, sell, or transfer their investments more easily.
@@ -87,29 +85,29 @@ Tokenization for blockchain programs can bring numerous benefits to various soci
 
 - Inclusion and Access: Blockchain programs can provide access to financial services, digital identity, and other applications to underserved populations, bridging the digital divide and promoting financial inclusion.
 - Empowerment and Local Economies: Tokenization can empower local communities by enabling them to participate in blockchain networks, share resources, and contribute to local economic ecosystems.
-- Trust and Accountability: Blockchain architecture promots trust and accountability within communities and society at large.
+- Trust and Accountability: Blockchain architecture promotes trust and accountability within communities and society at large.
 
 It's important to note that the benefits of tokenization and blockchain architecture can vary depending on the specific context, implementation, and adoption of these technologies. Additionally, challenges such as scalability, user experience, and regulatory considerations may also need to be addressed for wider adoption and to maximize the benefits for all social groups involved.
 
 # 2 · Architectural Principles
 
-In this section we aim to enlight the idea of main findings, which open up endless possibilities for us to create & use blockchain backends for Multi-User, Mass-Adoptable & Scalable Blockchain programs.
+This section presents the main architectural ideas that open up possibilities for multi-user, mass-adoptable, and scalable blockchain programs built on tokenized smart contract backends.
 
 ## 2.1 · Bird’s eye view
 
-Blockchain Program deployed to blockchain looks like a layered, growing, updatable and upgradable network of smart contracts sending messages and interacting asynchronously. Basically it has three layers: NFT layer, NFT Collections layer, and top layer consisting of one contract - `BlockchainProgram` - that acts as the index and master contract.
+Once deployed on a blockchain, Blockchain Program looks like a layered, growing, updatable and upgradable network of smart contracts sending messages and interacting asynchronously. It has three layers: an NFT layer, an NFT Collections layer, and a top layer consisting of one contract—`BlockchainProgram`—that acts as the index and master contract.
 
 ### 2.1.1 · NFT layer
 
-This is the essential layer of smart contracts that stores the largest amount of program data. In fact, to build a program using Blockchain Program principles we use an abstraction of NFT to represent any entity, no matter if it is a sword in a computer game, taxi-driver passport, or a smart contract of a voting game. When developing a program, we can implement different NFT and tokens standards according to our needs.
+This is the essential layer of smart contracts that stores the largest amount of program data. In fact, to build a program using Blockchain Program principles we use an abstraction of NFT to represent any entity, no matter if it is a sword in a computer game, taxi-driver passport, or a smart contract of a voting game. When developing a program, we can implement different NFT and token standards according to our needs.
 
 ### 2.1.2 · NFT Collections layer
 
-Contracts of this layer are based on the existing standard of TON NFT Editable Collection. We inherit the general idea and conception of NFT Collections (grouping and managing NFT) and add some specific functions, data structures and get-methods that we need for certain interactions, depending on their type.
+Contracts of this layer follow an editable NFT collection pattern: grouping and managing NFTs, plus domain specific functions, data structures, and getters. Comparable collection standards exist on several chains under different names.
 
 ### 2.1.3 · BlockchainProgram
 
-This smart contract manages the whole smart-contract network. It performs various functions related to managing collections of tokens. Those functions allow us to effectively manage all the smart-contracts in the network. Let’s stipulate it’s main functions:
+This smart contract manages the whole smart contract network. It performs various functions related to managing collections of tokens. Those functions allow us to effectively manage all the smart contracts in the network. Let’s stipulate its main functions:
 
 1. It keeps track of some important information about the contract, such as the sequence number, public key, owner's address, the index of the next collection, and a dictionary of collections.
 2. The contract allows the owner to change the ownership of the contract to a new address.
@@ -132,9 +130,9 @@ This smart contract manages the whole smart-contract network. It performs variou
 
 ## 2.4 · General Visual Representation
 
-The scheme below illustrates the network of smart-contracts, described in p. 2.1 and shows the pattern of messages sending and proxying.
+The scheme below illustrates the network of smart contracts described in §2.1 and shows how messages are sent and proxied.
 <br><br>
-![General visual representation](https://raw.githubusercontent.com/HyperlinksSpace/tonnftdapp/refs/heads/master/blackpaper/2.png)
+![General visual representation](https://raw.githubusercontent.com/HyperlinksSpace/BlockchainProgram/refs/heads/master/blackpaper/2.png)
 <br><br>
 As we can see there are three layers of smart contracts: `BlockchainProgram`, NFT Collections, and NFTs.
 
@@ -148,7 +146,7 @@ Widen functionality of layers: Explore the possibility of widening the functiona
 
 Add new layers: Introduce new layers to the technology stack that can serve specific purposes. For example, we might consider incorporating a layer for blockchain powered identity management, blockchain powered storage, or blockchain powered governance.
 
-Jettonize everything: We can further explore the potential use cases of Jettons and how they can enhance the functionality and flexibility of the tokenized blockchain applications. Utilize the concept of Jettons to represent and manage different entities within blockchain. Explore ways to create and utilize Jetton standards that can be easily extended and customized for various use cases.
+Fungible tokens everywhere: We can further explore fungible token models (in this codebase, Jetton style assets) and how they extend tokenized applications. Use fungible units to represent votes, stakes, or balances that pair with NFT based entities, with standards adapted per chain.
 
 Expand the functionality of smart contracts: Smart contracts are a core component of blockchain applications. Look for ways to expand the capabilities of smart contracts within the Blockchain Program framework.
 
@@ -166,15 +164,15 @@ This section describes basic technical features that make Blockchain Program wor
 
 
 
-## 3.1 · Deal with Smart-Contracts
+## 3.1 · Deal with smart contracts
 
 Blockchain Program provides basic features to manage smart contracts within your program.
 
 
 
-### 3.1.1 · Mint smart-contracts:
+### 3.1.1 · Mint smart contracts
 
-There are three ways to mint new smart contracts to in Blockchain Program network.
+There are three ways to mint new smart contracts in the Blockchain Program network.
 
 - Collection Deployment | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L89) | - `deploy_collection` mints new collections under master governance.
 - NFT Item Deployment | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L107) | - `deploy_item` deploys individual NFT items via the collection contract.
@@ -182,7 +180,7 @@ There are three ways to mint new smart contracts to in Blockchain Program networ
 
 
 
-### 3.1.2 · Change code of smart-contracts:
+### 3.1.2 · Change code of smart contracts
 
 These methods help us upgrade smart contracts:
 
@@ -211,13 +209,13 @@ We can even implement functions that will allow us to burn tokens, such as:
 
 ### 3.2.1 · Store Data
 
-We can mint a new smart-contract to blockchain to store new data. So we can use methods for creating smart-contracts described in p. 3.1.1 for that purpose.
+We can mint a new smart contract on the blockchain to store new data. Use the methods for creating smart contracts described in §3.1.1 for that purpose.
 
 
 
 ### 3.2.2 · Update Data
 
-We can take advantage of the Editable NFT Standard to update data in smart contracts. We can use following methods for that purpose:
+We can take advantage of the Editable NFT Standard to update data in smart contracts. We can use the following methods for that purpose:
 
 - Edit Collection Content | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L141) | - `edit_collection_content` updates collection content and metadata.
 - Edit NFT Item Content | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L174) | - `edit_item_content` updates NFT content and metadata.
@@ -247,32 +245,32 @@ Program owners have additional functionality and opportunities to maintain, scal
 Here are essential functions and opportunities for owners of the program:
 
 - Change program Owner | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L48) | - `change_owner` updates the program owner.
-- Withdraw Funds | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L57) | - `withdraw_funds` sends TON to the owner.
-- Manage Program Collectively - We can use a multisig, DAO smart contract, custom governance smart contract.
+- Withdraw Funds | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L57) | - `withdraw_funds` sends native currency on the host chain to the owner.
+- Manage Program Collectively: use a multisig, a DAO smart contract, or a custom governance smart contract.
 
 
 
 ### 3.3.2 · Upgrade Program
 
-We can upgrade your program using methods described in 3.1.2.
+We can upgrade the program using the methods described in §3.1.2.
 
 
 
 ### 3.3.3 · Build UI
 
-We can build a serverless frontend for our program using TON SDKs. For example, we can use [TON Connect demo program](https://github.com/ton-connect/demo-dapp) as a starting JS template.
+Build a serverless frontend with the wallet and chain SDKs for your target network. Wallet-connect-style flows work well for submitting transactions to `BlockchainProgram`.
 
 
 
 # 4 · Blockchain Program Concept
 
-Blockchain Program is an approach that combines a tokenized blockchain backend architecture with a serverless frontend. The core idea is to enable seamless program functionality by extracting required information from the `BlockchainProgram` smart-contract network.
+Blockchain Program is an approach that combines a tokenized blockchain backend architecture with a serverless frontend. The core idea is to enable seamless program functionality by extracting required information from the `BlockchainProgram` smart contract network.
 
-To illustrate the concept, consider a freelance marketplace. The program can retrieve real time data by parsing collections of freelance orders directly from the `BlockchainProgram` smart-contract network. This allows dynamic generation of available orders without a centralized backend.
+To illustrate the concept, consider a Blockchain Deals Platform. The program can retrieve real-time data by parsing deal and order collections directly from the `BlockchainProgram` smart contract network, without a centralized backend for that core state.
 
 The interaction between the program and smart contracts is bidirectional. When users engage in program processes, they can trigger changes in corresponding smart contracts by sending messages or transactions.
 
-By tokenizing program functionality and integrating it with blockchain infrastructure, Blockchain Program ensures data integrity, immutability, and a resilient architecture with without centralized failure points.
+By tokenizing program functionality and integrating it with blockchain infrastructure, Blockchain Program ensures data integrity, immutability, and a resilient architecture without centralized failure points.
 
 Moreover, this architecture enables a more collaborative environment by allowing users to participate directly in governance and decision-making through smart contracts.
 
@@ -282,62 +280,70 @@ In summary, Blockchain Program combines tokenized architecture with serverless f
 
 # 5 · Use Cases
 
-The aim of this section is to show how exactly underlied features work and conduct the work of the program on particular examples.
+The aim of this section is to show how the underlying features work in particular examples.
 
 
 
-## 5.1 · Freelance-exchange
+## 5.1 · Blockchain Deals
 
-Here is a concept of a blockchain freelance exchange service “TON Jobs”.
+Here is a concept of a **Blockchain Deals Platform**: coordinated deals between counterparties with settlement and dispute paths enforced by smart contracts.
 
-TON Jobs is a freelance exchange service that provides real payment guarantees through its blockchain architecture. Freelancers get guarantee of payment, as their rewards are stored on the balance of order NFT’s that are issued for each order. After completing the order they get an NFT of order on their wallet with order completion proof and corresponding funds on the balance. Contractors get service of arbitration in case of disputes for free. Service fees are deducted from freelancers' reward on the successful completion of order.
+The service can provide stronger payment guarantees because deal state and escrow style balances can be tied to order NFTs. Counterparties see rewards or deposits on the balance of order NFTs issued for each deal. After completion, the winning party can receive an order NFT with completion proof and funds on that contract balance. Optional arbitration can be modeled with admin roles. Fees can be taken on successful completion.
 
-Contractor’s scenario: Contractor opens the site, passes authorization through crypto wallet and registers his profile. He gets an NFT, where his profile data is stored. He presses the button to create a new freelance marketplace ad, enters all the information and reward sum. When creating the ad contractor stipulates the sum of reward, so when finishing the process of ad creation, contractor signs this message to TON, that will be send to mint an NFT of order that will store all the information about the order as well as the reward for the freelancer (contractor sends this sum with the message to deploy a new order in one transaction). Contractor waits for the offers from freelancers, having an opportunity to cancel the order any time and get back the funds. Freelancers apply for the order and their applications are stored in the data storage of the NFT of order so as the contractor can see them when refreshing the page. After getting the orders, the contractor chooses a freelancer and he becomes the doer of the order, stipulated in the smart-contract of order. When a freelancer finishes the work, he applies for the reward. If the Contractor confirms that the work is done within 48 hours, the freelancer is granted the amount and the NFT order. If not, or one of the counterparties sends for the appeal, admins go for the case and solve it individually according to the rules and conditions of the service.
+**Offer side scenario:** A user opens the app, connects a wallet, and registers a profile stored as an NFT. They create a new deal listing (reward, terms, deadlines). They sign a transaction that mints an order NFT holding terms and locked value in one flow. They wait for responses, can cancel while rules allow, and pick a counterparty; the order NFT records who is bound to perform.
 
-Freelancer’s scenario: Freelancer opens the site, passes authorization through crypto wallet and registers his profile. Freelancers browse existing NFT of orders, sorting and filtering them by attributes such as category, reward amount, time of creation, status, number of applications just like we browse NFT on marketplaces of NFT. Freelancer chooses the suitable order and applies for it, signing the transaction with his wallet, sending sufficient amount to cover the blockchain fee. If a freelancer is chosen for the work, he gets a notification to his crypto wallet from the service and can start completing the order. After completing the order freelancer presses the button to confirm completion and send corresponding message to blockchain to claim reward. If the contractor confirms this fact on his part within 48 hours, the freelancer gets the order NFT with order completion proof and freelancer’s reward amount.
+**Counterparty scenario:** Another user browses open deal NFTs, filters by category, reward, status, and applies. They sign with their wallet (paying network fees). If selected, they execute the work and confirm completion; settlement follows the rules encoded in the order path and any confirmation window.
 
-Admin scenario: Admins are given special admin NFTs for their achievements on the platform that grant rights to solve issues. Each case is considered individually and additional information is collected from counterparts. After considering the case, admins send votes to `BlockchainProgram` and receive a small reward for voting.
+**Admin scenario:** Admins hold role NFTs. Disputes can be escalated to admins; they can signal outcomes through `BlockchainProgram` governed flows and receive incentives if your tokenomics define that.
 
-Technical features: To build a freelance-exchange program on TON using NFT technology, we can leverage `BlockchainProgram` and NFT collections provided by this repository.
+**Technical features:** To build this shape of program with NFT technology, leverage `BlockchainProgram` and the collection contracts in this repository.
 
-1. Deploying NFT Collections: Using the master-contract from the repository, we can deploy NFT collections that will store the main assets of the freelance exchange program. For example, we can deploy NFT collections for orders, freelancers, employers, and admins. These collections will serve as units to store relevant data associated with each category.
-2. Storing Data as NFTs: With the NFT collections deployed, we can use the NFTs to store the main data of the freelance exchange program. Each NFT within a collection represents a unique entity such as an order, a freelancer, an employer, or an admin. We can associate metadata with each NFT to store additional information about the entity, such as the freelancer's skills, the order details, or the employer's preferences.
-3. Master-Contract Ownership and Editing: The master-contract becomes the owner and editor of all the deployed NFT collections. As the owner and editor, the master-contract has the authority to initiate the minting of NFTs and edit their attributes. This allows for the maintenance of up-to-date data on the blockchain. For example, when the status of an order changes, the freelance exchange program can send a request to the master-contract to update the corresponding NFT's status attribute.
-4. Data Updates via Master-Contract: When a change occurs in the freelance exchange program, such as the status of an order or the details of a freelancer, the program can interact with the master-contract to request the necessary updates. The program can send a message to the master-contract, specifying the NFT and the attribute to be edited. The master-contract then processes the request and updates the corresponding NFT attribute accordingly.
-5. Blockchain-based Data Storage: By utilizing NFTs and storing data on the TON blockchain, the freelance exchange program ensures that the important information, such as order statuses, freelancer details, and employer preferences, are securely stored and tamper-resistant. The data is kept on-chain, allowing for transparency and immutability.
-6. Additional Functionality: In addition to the core functionality of storing and updating data, we can enhance the freelance exchange program by adding features such as NFT transfers between users, tracking transaction history, implementing payment mechanisms using blockchain tokens, and creating a user-friendly front-end interface to interact with the program.
+1. Deploy NFT collections for deals, participants, counterparties, admins, or other domains you need.
+2. Store primary records as NFTs with metadata for terms, skills, status, and preferences.
+3. Let the master contract own or govern collections so mint and edit paths stay consistent.
+4. Route state changes through the master contract so updates land on the correct NFT fields.
+5. Keep authoritative data onchain for auditability.
+6. Extend with transfers, history, token settlement, and a frontend that reads and writes against the contracts.
 
-By using the NFT technology and master-contract architecture in this repository, we can create blockchain freelance exchange while keeping key data transparent and auditable on-chain.
+The narrative is the same architecture as elsewhere in this paper: **Blockchain Deals** is one product story; the **Blockchain Program** layering is what you can port to other chains with a rewrite of the contract language and token wiring.
 
 ## 5.2 · Betting
 
-Here is a concept of a blockchain betting service “TON Bet”.
+Here is a concept of a blockchain betting service “Blockchain Bet”.
 
-TON Bet is a betting service that provides real payment guarantees through its blockchain architecture. Users receive tokens for each bet, and receive rewards for winning bets based on having the tokens in their wallet. Additionally, the prize pool is held in staking during events, allowing users and agents to receive additional benefits. In the future, an automated feature is planned for users to create their own proposals and oracles for bets.
+Blockchain Bet is a betting service that provides real payment guarantees through its blockchain architecture. Users receive tokens for each bet and earn rewards for winning bets when they hold the right tokens in their wallet. Additionally, the prize pool is held in staking during events, allowing users and agents to receive additional benefits. In the future, an automated feature is planned for users to create their own proposals and oracles for bets.
 
 User scenario: Users vote on the outcome of real events (such as presidential elections). After the event, the outcome is determined, and those who guessed correctly receive their vote back with a proportionate part of the prize pool and any staking profits. Users determine the amount to bet.
 
-Offer for users: Earn profits by betting on current events. Voting system built blockchain powered guarantees fair payouts and survey transparency. Receive guaranteed extra winnings for staking the amount of your bet while the game is on.
+Offer for users: Earn profits by betting on current events. A blockchain-powered voting system helps guarantee fair payouts and transparent results. Receive extra winnings for staking the amount of your bet while the game is on.
 
-Influencer scenario: influencers, such as admins of Telegram chats or owners of Telegram channels, enter a special bot to view available betting games, select a game and generate a post to advertise in a channel to attract participants. After the outcome is determined, influencers receive a reward that can be withdrawn to their cold wallet.
+Influencer scenario: Influencers, such as admins of Telegram chats or owners of Telegram channels, enter a special bot to view available betting games, select a game, and generate a post to advertise in a channel to attract participants. After the outcome is determined, influencers receive a reward that can be withdrawn to their cold wallet.
 
 Offer for influencers: Try a new way to monetize your audience. Take benefits from low entry cost and high speed for checking profit hypotheses. Get transparent payout, secured by blockchain architecture of the service and additional profits from staking coins.
 
-MVP: The service issues proposals (like “who will be next president of the USA? Trump / Biden / other”), while influencers can generate their proxy smart-contracts to attract an audience and receive payments.
+MVP: The service issues proposals (like “who will be next president of the USA? Trump / Biden / other”), while influencers can generate their proxy smart contracts to attract an audience and receive payments.
 
-Technical features: Tokens are equivalent to votes in the service. Users select their stake amount in TON and the tokens, where 1 token equals 1 vote. The final prize pool value, based on the outcome, is distributed to the Jetton wallets of winning bets accordingly. Let's see how this mechanism works on the example of the voting process.
+Technical features: Tokens are equivalent to votes in the service. Users select their stake in the chain’s native asset and in voting tokens, where one voting token equals one vote. The final prize pool value, based on the outcome, is distributed to the winning bettors’ token wallets. The diagram below illustrates the voting flow in a Jetton style layout used in this codebase.
 <br><br>
-![TON Bet mechanism](https://raw.githubusercontent.com/HyperlinksSpace/tonnftdapp/refs/heads/master/blackpaper/3.png)
+![Blockchain Bet mechanism](https://raw.githubusercontent.com/HyperlinksSpace/tonnftdapp/refs/heads/master/blackpaper/3.png)
 <br><br>
-On the first and second steps user sends the amount of his bet through Influencer’s proxy (smart-contract that is needed to calculate Influencer’s reward) to the Jetton-Master of Votes (smart-contract, that accepts the bets and mints back Jettons to user accordingly to the amount of his votes). On the third step Jetton-Master just mints the corresponding amount of Jettons to the user.
+On the first and second steps, the user sends the amount of their bet through an Influencer’s proxy (a smart contract that calculates the Influencer’s reward) to the Jetton-Master of Votes (a smart contract that accepts bets and mints Jettons back to the user according to their vote count). On the third step, the Jetton-Master mints the corresponding amount of Jettons to the user.
 
-Tokenization: Tokens play a vital role in our architecture. After making a bet, users get Jettons that prove their rights for the reward with additional profit for stacking in case they win. Apart from that, users can get achievements in the form of NFT, which will allow them to access some additional privileges on our service, such as increased staking percentage or access to some VIP-offers.
+Tokenization: Tokens play a vital role in our architecture. After making a bet, users get Jettons that prove their rights to the reward, with additional profit from staking if they win. Apart from that, users can get achievements in the form of NFT, which will allow them to access some additional privileges on our service, such as increased staking percentage or access to some VIP-offers.
 
-Turnover of Jettons: Voting period for each proposal will be limited, there will always be some time between termination of voting and determining the outcome of an event. Due to this fact, Jettons can change their valuation over time. Let’s see how this will work on the example of the proposal to vote on the outcome of the presidential elections. This betting offer may be minted a year before the elections themselves and users may have an opportunity to vote within, let’s say, just a month after the minting of the proposal. In this case, somebody that will get known about this game after the voting termination, may want to buy jettons from other users to participate. On the other hand, somebody who has voted for the favorite may want to sell his Jettons at a lower rate than his potential reward, but get his money back earlier to lower the risk level. Change of favorite or expectations, news on the candidates and elections may drive sales on the secondary market too. For this reason, we plan to build a special Jettons exchange to help buyers of Voting Jettons to find sellers, explore offers and trade Jettons.
+Turnover of Jettons: Voting period for each proposal will be limited, there will always be some time between termination of voting and determining the outcome of an event. Due to this fact, Jettons can change their valuation over time. Let’s see how this will work on the example of the proposal to vote on the outcome of the presidential elections. This betting offer may be minted a year before the elections themselves and users may have an opportunity to vote within, let’s say, just a month after the minting of the proposal. In this case, someone who learns about this game only after voting ends may want to buy Jettons from other users to participate. On the other hand, somebody who has voted for the favorite may want to sell his Jettons at a lower rate than his potential reward, but get his money back earlier to lower the risk level. Change of favorite or expectations, news on the candidates and elections may drive sales on the secondary market too. For this reason, we plan to build a special Jettons exchange to help buyers of Voting Jettons to find sellers, explore offers and trade Jettons.
 
-Oracles: As we plan to expand our service for supporting almost all types of events from the birth of offspring of a popular blogger's cat to rap battle or football matches, we will allow different types of oracles depending on the type of the event. Firstly we will deploy the proposals, but when anyone will have an opportunity to mint a betting game on any event, they will choose an available type of oracle from the list themselves, e.g. in case of such event as birth of offspring of a popular blogger's cat (The question could be on the amount of cats that will be born) blogger himself will be able to act as an oracle, leaving it up to users to decide whether to trust his offer or not. In this case his wallet will act as an oracle and the transaction which will determine the outcome will be signed by his wallet. This address will be stored in the memory of smart-contract of this offer. In case of a rap battle, a multisig wallet can act as an oracle - all the judges will need to sign a transaction to determine the outcome. For such events as football matches or cryptocurrency rates related outcomes we can implement the usage of off-chain oracles.
+Oracles: We plan to support many kinds of events, from the birth of a popular blogger’s kittens to rap battles or football matches. Each event type can use a different oracle model.
 
-Moderation and Appeals: We want the content on our service to comply with universal moral standards, that's why we plan to check the user-generated proposals on the compliance to our terms and conditions. Of course we are aiming for blockchain mechanism of moderation and arbitration implementation. We will deploy the NFT collection of moderator’s badges and will implement a mechanism of getting moderator’s NFT for some specific activities on our service, that will allow users to vote on whether to post some proposals or not. Of course users will get some additional amount of coins from the prize pool for voting. We plan to use similar mechanics for the Appeals. When oracle determines the outcome, rewards don’t go to users instantly, user’s have some time to file an appeal. If some previously determined percent of users voted for the appeal, moderators come into the game, double check the situation and vote for the real outcome.
+At first, the service deploys proposals. Later, anyone will be able to mint a betting game for an event and choose an oracle type from a list.
+
+For a small or personal event—for example, a question about how many kittens will be born—the blogger can act as the oracle. Users decide whether to trust that offer. The oracle address is stored in the smart contract for that offer. The outcome is settled by a transaction signed from that wallet.
+
+For a rap battle, a multisig wallet can represent the judges. Every judge must sign the transaction that records the outcome.
+
+For football matches, cryptocurrency rates, or other outcomes that depend on external data, we can use off-chain oracles that report results into the contracts.
+
+Moderation and Appeals: We want the content on our service to comply with universal moral standards, that's why we plan to check the user-generated proposals on the compliance to our terms and conditions. Of course we are aiming for blockchain mechanism of moderation and arbitration implementation. We will deploy the NFT collection of moderator’s badges and will implement a mechanism of getting moderator’s NFT for some specific activities on our service, that will allow users to vote on whether to post some proposals or not. Of course users will get some additional amount of coins from the prize pool for voting. We plan to use similar mechanics for the Appeals. When the oracle determines the outcome, rewards do not go to users instantly; users have some time to file an appeal. If some previously determined percent of users voted for the appeal, moderators come into the game, double check the situation and vote for the real outcome.
 
 ## 5.3 · Taxi (Coming soon)
 
@@ -353,7 +359,7 @@ Digital collectibles: We can tokenize and create NFTs for digital artwork, virtu
 
 Real world assets: Physical assets like real estate, art pieces, luxury goods, or even intellectual property rights can be tokenized and represented as NFTs on the blockchain.
 
-Identity and reputation: We can tokenize identity related information, such as verified credentials or reputation scores, to enhance trust and interoperability in various industries like finance, education, and healthcare.
+Identity and reputation: We can tokenize identity-related information, such as verified credentials or reputation scores, to enhance trust and interoperability in various industries like finance, education, and healthcare.
 
 Financial instruments: NFTs can be used to tokenize financial assets like equity in companies, bonds, derivatives, and other investment instruments, providing fractional ownership and liquidity.
 
@@ -385,7 +391,7 @@ Apart from that, we can think about how to bring AI to blockchain. Of course, co
 
 Blockchain AI: By integrating AI with blockchain, we can create a blockchain AI network. Traditional AI models often rely on centralized servers, which can be vulnerable to single points of failure, data breaches, and censorship. With blockchain, AI models can be distributed across a network of nodes, making the system more robust, transparent, and resistant to attacks.
 
-Secure and Private Data Sharing: Blockchain technology provides a blockchain and tamper resistant platform for storing and sharing data. By utilizing smart contracts, we can establish rules and permissions for accessing data, ensuring privacy and security. AI algorithms can then be trained on this shared data without exposing the underlying sensitive information, thereby enabling collaborative and privacy preserving AI models.
+Secure and Private Data Sharing: Blockchain technology provides a tamper-resistant platform for storing and sharing data. By utilizing smart contracts, we can establish rules and permissions for accessing data, ensuring privacy and security. AI algorithms can then be trained on this shared data without exposing the underlying sensitive information, thereby enabling collaborative and privacy preserving AI models.
 
 Tokenized Incentives: The use of tokens within the blockchain can serve as incentives for participation in the AI network. For example, individuals can contribute their computational resources, such as processing power or storage, to the network and be rewarded with tokens in return. This incentivizes the growth of the network and encourages active participation from various stakeholders.
 
@@ -395,7 +401,7 @@ Enhanced Machine Learning Models: Integrating AI with blockchain can help improv
 
 New Business Models: The fusion of AI, blockchain, and neural networks can unlock novel business models. For instance, blockchain AI marketplaces can emerge, where individuals can buy and sell AI algorithms, services, or even trained models directly, eliminating the need for intermediaries. This can promote innovation, empower individual developers, and create a more accessible and competitive AI ecosystem.
 
-Autonomous Smart Contracts: AI embedded within smart contracts can enable autonomous and intelligent decision-making based on predefined rules and conditions. For example, in blockchain finance, AI Powered smart contracts can automatically assess and execute complex financial transactions, mitigate risks, and optimize investment strategies, all while ensuring transparency and security.
+Autonomous Smart Contracts: AI embedded within smart contracts can enable autonomous and intelligent decision-making based on predefined rules and conditions. For example, in blockchain finance, AI-powered smart contracts can automatically assess and execute complex financial transactions, mitigate risks, and optimize investment strategies, all while ensuring transparency and security.
 
 Trust and Verification: Blockchain's inherent trust and transparency can be leveraged to verify the authenticity and integrity of AI models and their outputs. This is particularly relevant in critical domains like healthcare or autonomous vehicles, where ensuring the reliability and trustworthiness of AI systems is essential.
 
@@ -411,4 +417,4 @@ Let’s play… Big. Let’s play… Wondering! Let’s create a blockchain worl
 
 I believe we can do it…. Together…
 
-*Special thanks to developers, founders and adepts of TON, to the community of TON & crypto community for their contributions for the whole blockchain technology landscape, to OpenAI team for creating a useful tool.*
+*Special thanks to developers and open blockchain communities whose standards and tools make architectures like this possible, and to the OpenAI team for useful tooling.*

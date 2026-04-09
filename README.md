@@ -1,18 +1,18 @@
 # Blockchain Program
 
-Blockchain Program is a tokenized blockchain architecture on TON that reveals the main principles of building and launching multi user, mass adoptable, and scalable blockchain programs and services such as freelance exchanges, bulletin boards, taxi services and more. Blockchain Program is built benefiting from NFT and NFT Collection standards and blockchain architecture principles. We developed ideas around editable NFTs to support wider range of use-cases. In this paradigm, NFTs and Jettons are used as units to store, retrieve, update, and process data needed to represent practical entities onchain. This approach enables creation of complex and useful blockchain services that are familiar from Web2, but blockchain native. The architecture introduces controller smart contract, [BlockchainProgram](./contracts/blockchain_program.fc), which governs NFT collections and related tokenized components in a single program. This consolidates management flows and provides a primary access point for application operations, while preserving the flexibility of NFT and collection level extensions.
+Blockchain Program is a tokenized smart-contract architecture that shows how to build and run multi-user, mass-adoptable, and scalable onchain programs: marketplaces, bulletin boards, mobility-style services, and more. The same layered pattern can be adapted across ecosystems once you map NFT or fungible token standards to your chain. This repository implements one concrete stack; the ideas transfer. NFTs and fungible tokens are used as units to store, retrieve, update, and process data needed to represent practical entities onchain. This approach enables complex blockchain services that feel familiar from Web2, but stay verifiable onchain. The architecture centers on a controller contract, [BlockchainProgram](./contracts/blockchain_program.fc), which governs NFT collections and related tokenized components in a single program. That consolidates management flows and gives one primary access point for operations, while preserving flexibility at collection and item level.
 
 ## Bird’s eye view
 
-Blockchain Program deployed to blockchain looks like a layered, growing, updatable and upgradable network of smart contracts sending messages and interacting asynchronously. It has three layers: NFT layer, NFT Collections layer, and the top layer consisting of one contract - `BlockchainProgram` - that acts as the index and master contract above all layers. Messages go between these layers from top to bottom. Each layer is responsible for its own scope of duties and responsibilities.
+Once deployed on a blockchain, Blockchain Program looks like a layered, growing, updatable and upgradable network of smart contracts sending messages and interacting asynchronously. It has three layers: NFT layer, NFT Collections layer, and the top layer consisting of one contract - `BlockchainProgram` - that acts as the index and master contract above all layers. Messages go between these layers from top to bottom. Each layer is responsible for its own scope of duties and responsibilities.
 
 ### NFT layer
 
-This is the essential layer of smart contracts that stores the largest amount of program data. In fact, to build a program using Blockchain Program principles we use an abstraction of NFT to represent any entity, no matter if it is a sword in a computer game, taxi driver passport, or a smart contract of a voting game. When developing a program with Blockchain Program, you can implement different NFT standards according to your needs. For instance, in a freelance exchange, each contractor ad, user profile, and admin role can be represented as an NFT. In general, many entities can be represented as NFTs because they can store metadata and files such as images, video, PDF, music, and more.
+This is the essential layer of smart contracts that stores the largest amount of program data. In fact, to build a program using Blockchain Program principles we use an abstraction of NFT to represent any entity, no matter if it is a sword in a computer game, a taxi-driver passport, or a smart contract for a voting game. When developing a program with Blockchain Program, you can implement different NFT standards according to your needs. For instance, on a Blockchain Deals-style platform, each listing, user profile, and admin role can be represented as an NFT. In general, many entities can be represented as NFTs because they can store metadata and files such as images, video, PDF, music, and more.
 
 ### NFT Collections layer
 
-Contracts of this layer are based on the existing standard of TON NFT Editable Collection. We inherit the general idea and conception of NFT Collections, grouping and managing NFT and add some specific functions, data structures and get methods that we need for certain interactions, depending on their type.
+Contracts of this layer follow an editable NFT collection pattern: grouping and managing NFTs, with domain-specific functions, data structures, and getters for the interactions you need. The same structural idea appears on several chains under different standard names.
 
 ### BlockchainProgram
 
@@ -45,7 +45,7 @@ Blockchain Program provides basic features to manage smart contracts within your
 
 #### Mint smart contracts:
 
-There are three ways to mint new smart contracts to the network of your program.
+There are three ways to mint new smart contracts into your program’s network.
 
 * Collection Deployment | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L89) | - `deploy_collection` in `BlockchainProgram` mints new collections under master governance.
 
@@ -63,7 +63,7 @@ These methods help us to upgrade smart contracts in our program:
 
 * Edit NFT Code (coming soon)
 
-#### Delete smart-contracts
+#### Delete smart contracts
 
 We can even implement functions that will allow us to burn tokens, such as:
 
@@ -81,11 +81,11 @@ We can even implement functions that will allow us to burn tokens, such as:
 
 #### Store Data
 
-We can mint a new smart contract to blockchain to store new data. So we can use methods for creating smart-contracts described in p. 3.1.1 for that purpose.
+We can mint a new smart contract on the blockchain to store new data. Use the minting methods described under **Mint smart contracts** above for that purpose.
 
 #### Update Data
 
-We can take advantage of the Editable NFT Standard to update data in smart contract by just editing it. We can use following methods for that purpose:
+We can take advantage of the Editable NFT Standard to update data in a smart contract by editing it. We can use the following methods for that purpose:
 
 * Edit Collection Content | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L141) | - `edit_collection_content` updates content and metadata of NFT collections through `BlockchainProgram`.
 
@@ -111,23 +111,23 @@ Here are essential functions and opportunities for owners of the program:
 
 * Change program Owner | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L48) | - `change_owner` updates the owner of `BlockchainProgram` (incoming `op::change_owner` is handled in `recv_internal` at line 341).
 
-* Withdraw Funds | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L57) | - `withdraw_funds` sends TON to the owner address of `BlockchainProgram`.
+* Withdraw Funds | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L57) | - `withdraw_funds` sends native currency on the host chain to the owner address of `BlockchainProgram`.
 
-* Manage Program Collectively - We can use a multisig, DAO smart contract, any other solution.
+* Manage Program Collectively: use a multisig, a DAO smart contract, or any other solution.
 
 #### Upgrade Program
 
-We can upgrade our program using methods described in p. 3.1.2.
+We can upgrade the program using the methods described under **Change code of smart contracts** above.
 
 #### Build UI
 
-We can build a serverless frontend for your program using TON SDKs. For example, we can use TON Connect demo program as a starting JS template.
+We can build a serverless frontend using the wallet and chain SDKs for your target network. Wallet-connect-style flows work well for submitting transactions to `BlockchainProgram`.
 
 ### Blockchain Program Concept
 
-Blockchain Program is an approach that combines a tokenized blockchain architecture with a serverless frontend. The core idea is to enable program functionality by extracting required information directly from the `BlockchainProgram` smart-contract network.
+Blockchain Program is an approach that combines a tokenized blockchain architecture with a serverless frontend. The core idea is to enable program functionality by extracting required information directly from the `BlockchainProgram` smart contract network.
 
-To illustrate the concept, consider a freelance marketplace. The program can retrieve real time data by parsing collections of freelance orders directly from the `BlockchainProgram` smart-contract network, eliminating the need for a centralized management.
+To illustrate the concept, consider a Blockchain Deals Platform. The program can retrieve real-time data by parsing deal and order collections directly from the `BlockchainProgram` smart contract network, without a centralized coordinator for core state.
 
 The interaction between the program and smart contracts is bidirectional. When users perform actions, they can trigger changes in corresponding smart contracts by sending messages or transactions.
 
@@ -156,23 +156,23 @@ Key directories:
 - [`tests/`](./tests/) - Automated tests and test utilities used to validate contract behavior.
 	- [`tests/utils/`](./tests/utils/) - Test helper utilities (for example, random key generation) reused across specs.
 
-## Freelance Exchange implementation description
+## Blockchain Deals Platform (example shape)
 
-To build a freelance exchange program, we can leverage the `BlockchainProgram` contract and NFT collections provided in this repository:
+To build a Blockchain Deals-style program, we can leverage the `BlockchainProgram` contract and NFT collections in this repository:
 
-1. **Deploying NFT Collections**: Using the master-contract from the repository, we can deploy NFT collections that will store the main assets of the freelance exchange program. For example, we can deploy NFT collections for orders, freelancers, employers, and admins. These collections will serve as units to store relevant data associated with each category.
+1. **Deploying NFT Collections**: Using the master contract from the repository, we deploy NFT collections that hold the main entities of the deals platform: for example collections for open deals, participants, counterparties, and admins. Each collection groups one kind of record.
 
-2. **Storing Data as NFTs**: With the NFT collections deployed, we can use the NFTs to store the main data of the freelance exchange program. Each NFT within a collection represents unique entity such as order, freelancer, employer or admin. You can associate metadata with each NFT to store additional information about the entity, such as the freelancer's skills, order details or the employer's preferences.
+2. **Storing Data as NFTs**: With those collections deployed, NFTs store the primary data of the platform. Each NFT can represent a deal, a participant profile, a counterparty, or an admin role. Metadata can carry skills, deal terms, preferences, and status fields.
 
-3. **Contract Ownership and Editing**: `BlockchainProgram` becomes the owner and editor of deployed NFT collections. As owner and editor, it can initiate minting and edit attributes to keep data up to date onchain.
+3. **Contract Ownership and Editing**: `BlockchainProgram` becomes the owner and editor of deployed NFT collections where that fits your trust model. It can initiate minting and edit attributes so onchain state stays current.
 
-4. **Data Updates**: When program state changes, the program can send messages to `BlockchainProgram`, which processes and routes updates to the corresponding NFT attribute.
+4. **Data Updates**: When program state changes, the program sends messages to `BlockchainProgram`, which routes updates to the right collection and NFT fields.
 
-5. **Blockchain Based Data Storage**: By utilizing NFTs and storing data on the TON blockchain, the freelance exchange program ensures that the important information, such as order statuses, freelancer details, and employer preferences, are securely stored and tamper resistant. The data is kept onchain, allowing for transparency and immutability.
+5. **Onchain Data Storage**: Important information (deal status, participant fields, preferences) lives in contract storage, tamper-evident and readable by anyone with ledger access.
 
-6. **Additional Functionality**: In addition to the core functionality of storing and updating data, we can enhance the freelance exchange program by adding features such as NFT transfers between users, tracking transaction history, implementing payment mechanisms using blockchain tokens, and creating a user friendly frontend interface to interact with the program.
+6. **Additional Functionality**: Beyond storing and updating data, you can add NFT transfers between users, history via the chain, settlement using the chain’s native asset or app tokens, and a frontend that talks to the contracts directly.
 
-By using NFT technology and the `BlockchainProgram` architecture from this repository, we can create a blockchain freelance exchange while keeping key data transparent and auditable on-chain.
+The same `BlockchainProgram` layering applies on other smart contract platforms after you port the FunC contract and wire your chain’s token and address rules; the architecture is the portable part.
 
 ## Blackpaper
 
