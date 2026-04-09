@@ -1,6 +1,6 @@
 # Blockchain Program
 
-Blockchain Program is a tokenized blockchain architecture on TON that reveals the main principles of building and launching multi user, mass adoptable, and scalable blockchain programs and services such as freelance exchanges, bulletin boards, taxi services and more. Blockchain Program is built benefiting from NFT and NFT Collection standards and blockchain architecture principles. We developed ideas around editable NFTs to support wider range of use-cases. In this paradigm, NFTs and Jettons are used as units to store, retrieve, update, and process data needed to represent practical entities onchain. This approach enables creation of complex and useful blockchain services that are familiar from Web2, but blockchain native. The architecture introduces controller smart contract, `BlockchainProgram` (in `contracts/blockchain_program.fc`), which governs NFT collections and related tokenized components in a single program. This consolidates management flows and provides a primary access point for application operations, while preserving the flexibility of NFT and collection level extensions.
+Blockchain Program is a tokenized blockchain architecture on TON that reveals the main principles of building and launching multi user, mass adoptable, and scalable blockchain programs and services such as freelance exchanges, bulletin boards, taxi services and more. Blockchain Program is built benefiting from NFT and NFT Collection standards and blockchain architecture principles. We developed ideas around editable NFTs to support wider range of use-cases. In this paradigm, NFTs and Jettons are used as units to store, retrieve, update, and process data needed to represent practical entities onchain. This approach enables creation of complex and useful blockchain services that are familiar from Web2, but blockchain native. The architecture introduces controller smart contract, [BlockchainProgram](./contracts/blockchain_program.fc), which governs NFT collections and related tokenized components in a single program. This consolidates management flows and provides a primary access point for application operations, while preserving the flexibility of NFT and collection level extensions.
 
 ## Bird’s eye view
 
@@ -47,17 +47,17 @@ Blockchain Program provides basic features to manage smart contracts within your
 
 There are three ways to mint new smart contracts to the network of your program.
 
-* Collection Deployment | [see code ↗](./contracts/blockchain_program.fc) | - function of `BlockchainProgram` that allows us to mint new collections under master governance.
+* Collection Deployment | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L89) | - `deploy_collection` in `BlockchainProgram` mints new collections under master governance.
 
-* NFT Item Deployment | [see code ↗](./contracts/blockchain_program.fc) | - We can deploy individual NFT items in collections through `BlockchainProgram`. Messages are forwarded to the corresponding NFT collection, which mints the NFT item contract.
+* NFT Item Deployment | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L107) | - `deploy_item` deploys individual NFT items via the collection contract. Messages are forwarded to the corresponding NFT collection, which mints the NFT item contract.
 
-* Batch NFT Deploy | [see code ↗](./contracts/blockchain_program.fc) | - We can deploy multiple NFTs with a single transaction.
+* Batch NFT Deploy | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L125) | - `batch_nft_deploy` deploys multiple NFTs in one flow.
 
 #### Change code of smart contracts:
 
 These methods help us to upgrade smart contracts in our program:
 
-* Edit Program Code | [see code ↗](./contracts/blockchain_program.fc) | - We can upgrade the code of the main smart contract (`BlockchainProgram`).
+* Edit Program Code | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L67) | - `edit_code` upgrades the code of the main smart contract (`BlockchainProgram`).
 
 * Edit Collection Code (coming soon)
 
@@ -67,7 +67,7 @@ These methods help us to upgrade smart contracts in our program:
 
 We can even implement functions that will allow us to burn tokens, such as:
 
-* Destroy SBT Item | [see code ↗](./contracts/blockchain_program.fc) | - We can burn SBT tokens in SBT collections via `BlockchainProgram`.
+* Destroy SBT Item | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L188) | - `destroy_sbt_item` burns SBT tokens in SBT collections via `BlockchainProgram`.
 
 * Delete program (coming soon)
 
@@ -87,17 +87,17 @@ We can mint a new smart contract to blockchain to store new data. So we can use 
 
 We can take advantage of the Editable NFT Standard to update data in smart contract by just editing it. We can use following methods for that purpose:
 
-* Edit Collection Content | [see code ↗](./contracts/blockchain_program.fc) | - We can update content and metadata of NFT collections through `BlockchainProgram`.
+* Edit Collection Content | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L141) | - `edit_collection_content` updates content and metadata of NFT collections through `BlockchainProgram`.
 
-* Edit NFT Item Content | [see code ↗](./contracts/blockchain_program.fc) | - We can update NFT content and metadata through `BlockchainProgram`.
+* Edit NFT Item Content | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L174) | - `edit_item_content` updates NFT content and metadata through `BlockchainProgram`.
 
 #### Retrieve Data
 
-* Use Program Get Methods | [see code ↗](./contracts/blockchain_program.fc) | - In Blockchain Program we can get the current sequence number, program data, and deployed collection addresses.
+* Use Program Get Methods | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L368) | - `get_dapp_data` returns owner, next collection index, and collections dictionary.
 
-* Use Collection Get Methods | [see code ↗](./contracts/customers_collection.fc) | - For example, in freelancer/customer collections we can get item addresses by index, royalty params, and NFT content.
+* Use Collection Get Methods | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/customers_collection.fc#L149) | - Example: `get_collection_data` and related getters (`get_nft_address_by_index`, `royalty_params`, `get_nft_content` in the same file).
 
-* Use NFT Get-Methods | [see code ↗](./contracts/customers_nft.fc) | - We can get NFT content or editor address using inherited NFT standard getters.
+* Use NFT Get-Methods | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/customers_nft.fc#L219) | - `get_nft_data` and `get_editor` expose NFT content and editor address.
 
 #### Process Data (Coming soon)
 
@@ -109,9 +109,9 @@ Program owners have additional functionality and opportunities to maintain, scal
 
 Here are essential functions and opportunities for owners of the program:
 
-* Change program Owner | [see code ↗](./contracts/blockchain_program.fc) | - owner change of `BlockchainProgram`, for example migrating from a regular wallet to multisig wallet, DAO contract or other solution.
+* Change program Owner | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L48) | - `change_owner` updates the owner of `BlockchainProgram` (incoming `op::change_owner` is handled in `recv_internal` at line 341).
 
-* Withdraw Funds | [see code ↗](./contracts/blockchain_program.fc) | - We can withdraw funds to the owner address of `BlockchainProgram`.
+* Withdraw Funds | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L57) | - `withdraw_funds` sends TON to the owner address of `BlockchainProgram`.
 
 * Manage Program Collectively - We can use a multisig, DAO smart contract, any other solution.
 

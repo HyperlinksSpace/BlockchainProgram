@@ -10,7 +10,7 @@ The aim of this text is to give anyone, no matter of technical background, a com
 
 *What is?*
 
-*Blockchain Program is a tokenized blockchain backend architecture on TON for building multiuser, scalable blockchain programs and services such as freelance exchanges, bulletin boards, taxi services, and more. It is built strengthening NFT, NFT Collection concepts and blockchain architecture principles. The architecture uses NFTs and Jettons as units to store, retrieve, update, and process chain's program entities. The top-level controller contract in this repository is `BlockchainProgram` (`contracts/blockchain_program.fc`), which governs NFT collections and routes core management operations across the program.*
+*Blockchain Program is a tokenized blockchain backend architecture on TON for building multiuser, scalable blockchain programs and services such as freelance exchanges, bulletin boards, taxi services, and more. It is built strengthening NFT, NFT Collection concepts and blockchain architecture principles. The architecture uses NFTs and Jettons as units to store, retrieve, update, and process chain's program entities. The top-level controller contract in this repository is [BlockchainProgram](./contracts/blockchain_program.fc) with `recv_internal`, which governs NFT collections and routes core management operations across the program.*
 
 ---
 
@@ -133,9 +133,9 @@ This smart contract manages the whole smart-contract network. It performs variou
 ## 2.4 · General Visual Representation
 
 The scheme below illustrates the network of smart-contracts, described in p. 2.1 and shows the pattern of messages sending and proxying.
-<br><br><br>
+<br><br>
 ![General visual representation](https://raw.githubusercontent.com/HyperlinksSpace/tonnftdapp/refs/heads/master/blackpaper/2.png)
-<br><br><br>
+<br><br>
 As we can see there are three layers of smart contracts: `BlockchainProgram`, NFT Collections, and NFTs.
 
 
@@ -176,9 +176,9 @@ Blockchain Program provides basic features to manage smart contracts within your
 
 There are three ways to mint new smart contracts to in Blockchain Program network.
 
-- Collection Deployment | [see code ↗](../contracts/blockchain_program.fc) | - function of `BlockchainProgram` that allows us to mint new collections under master governance.
-- NFT Item Deployment | [see code ↗](../contracts/blockchain_program.fc) | - We can deploy individual NFT items in collections through `BlockchainProgram`.
-- Batch NFT Deploy | [see code ↗](../contracts/blockchain_program.fc) | - We can deploy multiple NFTs with a single transaction.
+- Collection Deployment | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L89) | - `deploy_collection` mints new collections under master governance.
+- NFT Item Deployment | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L107) | - `deploy_item` deploys individual NFT items via the collection contract.
+- Batch NFT Deploy | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L125) | - `batch_nft_deploy` deploys multiple NFTs in one flow.
 
 
 
@@ -186,7 +186,7 @@ There are three ways to mint new smart contracts to in Blockchain Program networ
 
 These methods help us upgrade smart contracts:
 
-- Edit Program Code | [see code ↗](../contracts/blockchain_program.fc) | - We can upgrade the code of (`BlockchainProgram`).
+- Edit Program Code | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L67) | - `edit_code` upgrades the main contract code.
 - Edit Collection Code (coming soon)
 - Edit NFT Code (coming soon)
 
@@ -196,7 +196,7 @@ These methods help us upgrade smart contracts:
 
 We can even implement functions that will allow us to burn tokens, such as:
 
-- Destroy SBT Item | [see code ↗](../contracts/blockchain_program.fc) | - We can burn SBT tokens in SBT collections via `BlockchainProgram`.
+- Destroy SBT Item | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L188) | - `destroy_sbt_item` burns SBT items via `BlockchainProgram`.
 - Delete program (coming soon)
 - Delete NFT (coming soon)
 - Delete NFT Collection (coming soon)
@@ -219,16 +219,16 @@ We can mint a new smart-contract to blockchain to store new data. So we can use 
 
 We can take advantage of the Editable NFT Standard to update data in smart contracts. We can use following methods for that purpose:
 
-- Edit Collection Content | [see code ↗](../contracts/blockchain_program.fc) | - We can update collection content and metadata via `BlockchainProgram`.
-- Edit NFT Item Content | [see code ↗](../contracts/blockchain_program.fc) | - We can update NFT content and metadata via `BlockchainProgram`.
+- Edit Collection Content | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L141) | - `edit_collection_content` updates collection content and metadata.
+- Edit NFT Item Content | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L174) | - `edit_item_content` updates NFT content and metadata.
 
 
 
 ### 3.2.3 · Retrieve Data
 
-- Use Program Get-Methods | [see code ↗](../contracts/blockchain_program.fc) | - In Blockchain Program we can get sequence number, program data, and deployed collection addresses.
-- Use Collection Get-Methods | [see code ↗](../contracts/customers_collection.fc) | - For example, collection getters allow us to get NFT addresses by index, royalty params, and NFT content.
-- Use NFT Get-Methods | [see code ↗](../contracts/customers_nft.fc) | - We can get NFT content or the editor address from inherited NFT standard getters.
+- Use Program Get-Methods | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L368) | - `get_dapp_data` returns owner, next collection index, and collections dictionary.
+- Use Collection Get-Methods | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/customers_collection.fc#L149) | - e.g. `get_collection_data`, `get_nft_address_by_index`, `royalty_params`, `get_nft_content` in the same file.
+- Use NFT Get-Methods | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/customers_nft.fc#L219) | - `get_nft_data` and `get_editor` (line 224).
 
 
 
@@ -246,8 +246,8 @@ Program owners have additional functionality and opportunities to maintain, scal
 
 Here are essential functions and opportunities for owners of the program:
 
-- Change program Owner | [see code ↗](../contracts/blockchain_program.fc) | - We can change the owner of `BlockchainProgram`, for example by migrating from a regular wallet to multisig, DAO smart contracts, any other smart contracts.
-- Withdraw Funds | [see code ↗](../contracts/blockchain_program.fc) | - We can withdraw funds to the owner address of `BlockchainProgram`.
+- Change program Owner | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L48) | - `change_owner` updates the program owner.
+- Withdraw Funds | [see code ↗](https://github.com/HyperlinksSpace/BlockchainProgram/blob/master/contracts/blockchain_program.fc#L57) | - `withdraw_funds` sends TON to the owner.
 - Manage Program Collectively - We can use a multisig, DAO smart contract, custom governance smart contract.
 
 
@@ -326,9 +326,9 @@ Offer for influencers: Try a new way to monetize your audience. Take benefits fr
 MVP: The service issues proposals (like “who will be next president of the USA? Trump / Biden / other”), while influencers can generate their proxy smart-contracts to attract an audience and receive payments.
 
 Technical features: Tokens are equivalent to votes in the service. Users select their stake amount in TON and the tokens, where 1 token equals 1 vote. The final prize pool value, based on the outcome, is distributed to the Jetton wallets of winning bets accordingly. Let's see how this mechanism works on the example of the voting process.
-<br><br><br>
+<br><br>
 ![TON Bet mechanism](https://raw.githubusercontent.com/HyperlinksSpace/tonnftdapp/refs/heads/master/blackpaper/3.png)
-<br><br><br>
+<br><br>
 On the first and second steps user sends the amount of his bet through Influencer’s proxy (smart-contract that is needed to calculate Influencer’s reward) to the Jetton-Master of Votes (smart-contract, that accepts the bets and mints back Jettons to user accordingly to the amount of his votes). On the third step Jetton-Master just mints the corresponding amount of Jettons to the user.
 
 Tokenization: Tokens play a vital role in our architecture. After making a bet, users get Jettons that prove their rights for the reward with additional profit for stacking in case they win. Apart from that, users can get achievements in the form of NFT, which will allow them to access some additional privileges on our service, such as increased staking percentage or access to some VIP-offers.
