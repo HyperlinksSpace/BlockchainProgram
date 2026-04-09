@@ -17,13 +17,13 @@ import { CollectionMintNftEditable, CollectionMintSbtEditable, MintNftDictValue,
 import { RoyaltyParams } from './utils/collectionHelpers';
 import { buildOnChainMetadataCell, ItemMetaDataKeys } from './utils/nftContent';
 
-export type NftDappConfig = {
+export type BlockchainProgramConfig = {
     ownerAddress: Address;
     nextCollectionIndex: number;
     collectionsDict: Dictionary<number, Address>;
 };
 
-export function nftDappConfigToCell(config: NftDappConfig): Cell {
+export function blockchainProgramConfigToCell(config: BlockchainProgramConfig): Cell {
     return beginCell()   
           .storeAddress(config.ownerAddress)
           .storeUint(config.nextCollectionIndex, 64)
@@ -31,17 +31,17 @@ export function nftDappConfigToCell(config: NftDappConfig): Cell {
         .endCell();
 }
 
-export class NftDapp implements Contract {
+export class BlockchainProgram implements Contract {
     constructor(readonly address: Address, readonly init?: { code: Cell; data: Cell }) {}
 
     static createFromAddress(address: Address) {
-        return new NftDapp(address);
+        return new BlockchainProgram(address);
     }
 
-    static createFromConfig(config: NftDappConfig, code: Cell, workchain = 0) {
-        const data = nftDappConfigToCell(config);
+    static createFromConfig(config: BlockchainProgramConfig, code: Cell, workchain = 0) {
+        const data = blockchainProgramConfigToCell(config);
         const init = { code, data };
-        return new NftDapp(contractAddress(workchain, init), init);
+        return new BlockchainProgram(contractAddress(workchain, init), init);
     }
 
     async sendDeploy(provider: ContractProvider, via: Sender, value: bigint) {

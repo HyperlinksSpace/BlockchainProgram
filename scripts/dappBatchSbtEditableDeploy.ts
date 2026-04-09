@@ -1,4 +1,4 @@
-import { NftDapp } from '../wrappers/NftDapp';
+import { BlockchainProgram } from '../wrappers/BlockchainProgram';
 import { NetworkProvider } from '@ton-community/blueprint';
 import { Address, toNano } from 'ton-core';
 
@@ -7,9 +7,9 @@ export async function run(provider: NetworkProvider, args: string[]) {
 
     const address = Address.parse(args.length > 0 ? args[0] : await ui.input('Dapp address'));
 
-    const nftDapp = provider.open(NftDapp.createFromAddress(address));
+    const blockchainProgram = provider.open(BlockchainProgram.createFromAddress(address));
 
-    await nftDapp.sendBatchSbtDeployMsg(provider.sender(), {
+    await blockchainProgram.sendBatchSbtDeployMsg(provider.sender(), {
         sbts: [
             {
                 passAmount: toNano('0.05'),

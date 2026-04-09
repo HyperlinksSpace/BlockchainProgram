@@ -1,22 +1,22 @@
-# Tokenized Decentralized Backend template 
+# Blockchain Program
 
-TDBt is a tokenized decentralized backend template on TON, that reveals the main principles of building and launching Multi-User, Mass-Adoptable & Scalable Decentralized apps and services such as freelance-exchanges, bulletin boards, taxi, etc. TDBt. is built upon a strong foundation of TON, conceptions of NFT & NFT-Collections, conception of Decentralization itself. We developed the ideas lying behind the concept of editable NFT’s (mainly used for minting so-called “loot-box” NFT collections) offering to apply NFT for a wider range of use-cases. In fact, we propose to think and develop in the paradigm, in which we perceive NFT and Jettons as units, that allow us to store, retrieve, update and even process data (because we can easily extend NFT Standards easily), needed to represent practically entities in blockchain. We are convinced that this approach can lead to creation of a vast variety of complex and useful apps, usage of which we can already experience in Web 2.0, but decentralized. Our technology opens up the possibility to build practically any backend in blockchain, using the power of Jettons, NFT, Collections & the new type of smart-contracts, that we have developed — Token Decentralized Backend smart-contract (further, TDBs), that is needed to conduct and manage all NFT Collections and Jetton-masters under his responsibility. By building this new layer, we automaze & consolidate the process of governing NFT Collections & Jettons, making TDBs an owner & editor of all Collections & Jetton-masters within one single app. This gives us an opportunity to build a vast variety of processes within blockchain representing different entities in the form of NFT Collections & Jettons, needed for the app to work (e.g. freelance-exchange basically needs representation of freelancers, contractors, ads & admins on it’s backend). Apart from that we provide an opportunity to easily interact with the app, as TDBs becomes the main access-point to all functions of the app. We kept the code of NFT and NFT-Collections, but extended its functionality to meet the user-stories and other requirements in our first implementation.
+Blockchain Program is a tokenized blockchain architecture on TON that reveals the main principles of building and launching multi user, mass adoptable, and scalable blockchain programs and services such as freelance exchanges, bulletin boards, taxi services and more. Blockchain Program is built benefiting from NFT and NFT Collection standards and blockchain architecture principles. We developed ideas around editable NFTs to support wider range of use-cases. In this paradigm, NFTs and Jettons are used as units to store, retrieve, update, and process data needed to represent practical entities onchain. This approach enables creation of complex and useful blockchain services that are familiar from Web2, but blockchain native. The architecture introduces controller smart contract, `BlockchainProgram` (in `contracts/blockchain_program.fc`), which governs NFT collections and related tokenized components in a single program. This consolidates management flows and provides a primary access point for application operations, while preserving the flexibility of NFT and collection level extensions.
 
 ## Bird’s eye view
 
-TDBt deployed to blockchain looks like a layered, growing, updatable & upgradable network of smart-contracts sending messages and interacting with each other asynchronously. Basically it has three layers: NFT layer, NFT Collections layer & top layer consisting of just one contract – TDBs that acts as the index & master contract on the top of all layers. Messages go between these layers from top to bottom. Each layer is responsible for its own scope of duties and responsibilities.
+Blockchain Program deployed to blockchain looks like a layered, growing, updatable and upgradable network of smart contracts sending messages and interacting asynchronously. It has three layers: NFT layer, NFT Collections layer, and the top layer consisting of one contract - `BlockchainProgram` - that acts as the index and master contract above all layers. Messages go between these layers from top to bottom. Each layer is responsible for its own scope of duties and responsibilities.
 
 ### NFT layer
 
-This is the essential layer of smart-contracts that stores the largest amount of data of the app. In fact, to build an app using principles of TDBt we use an abstraction of NFT to represent any entity, no matter if it is a sword in a computer game, taxi-driver's passport or a smart-contract of a voting game. When developing the app on the principles of TDBt. you can implement different NFT Standards, according to your needs. For instance, if you make a freelance-exchange, you may represent each contractor’s ad in the form of NFT, as well as each contractor’s or freelancer’s profile, as well as admin’s NFT that gives him certain rights. In general, we can represent vast amounts of entities in the form of NFT as it can store practically any metadata & files, such as images, video, pdf, music & so on. We propose to store metadata on-chain to easily edit and manipulate individual attributes. Depending on the particular entity that we represent in the form of NFT, we use different NFT Standards, modify & extend them, if needed.
+This is the essential layer of smart contracts that stores the largest amount of program data. In fact, to build a program using Blockchain Program principles we use an abstraction of NFT to represent any entity, no matter if it is a sword in a computer game, taxi driver passport, or a smart contract of a voting game. When developing a program with Blockchain Program, you can implement different NFT standards according to your needs. For instance, in a freelance exchange, each contractor ad, user profile, and admin role can be represented as an NFT. In general, many entities can be represented as NFTs because they can store metadata and files such as images, video, PDF, music, and more.
 
 ### NFT Collections layer
 
-Contracts of this layer are based on the existing standard of TON NFT Editable Collection. We inherit the general idea and conception of NFT Collections (grouping and managing NFT) and add some specific functions, data structures and get-methods that we need for certain interactions, depending on their type.
+Contracts of this layer are based on the existing standard of TON NFT Editable Collection. We inherit the general idea and conception of NFT Collections, grouping and managing NFT and add some specific functions, data structures and get methods that we need for certain interactions, depending on their type.
 
-### TDBs
+### BlockchainProgram
 
-This smart contract forms the top layer of this smart-contract's network. It performs various functions related to managing collections of tokens. Those functions allow us to effectively manage all the smart-contracts in the network. Let’s stipulate it’s main functions:
+This smart contract forms the top layer of this smart contract network. It performs functions related to managing collections and items and allows us to effectively manage all smart contracts in the network. Main functions:
 
 * It keeps track of some important information about the contract, such as the sequence number, public key, owner's address, the index of the next collection, and a dictionary of collections. 
 * The contract allows the owner to change the ownership of the contract to a new address. 
@@ -37,27 +37,27 @@ This smart contract forms the top layer of this smart-contract's network. It per
 
 ## Features
 
-This section describes basic technical features (functional atoms) that make TDBt work. Please take note that you can manage all the interactions described (except get-methods for retrieving data) by sending messages to TDBs (top-layer smart-contract), that will (if needed) proxy the message to the smart-contracts of the layer at the bottom, and so on.
+This section describes basic technical features that make Blockchain Program work. You can manage all the interactions described (except getters for retrieving data) by sending messages to `BlockchainProgram` (the top-layer smart contract), which can proxy the message to lower layer smart contracts when needed.
 
-### Deal with Smart-Contracts
+### Deal with Smart Contracts
 
-TDBt provides basic features to manage smart-contracts within your app.
+Blockchain Program provides basic features to manage smart contracts within your program.
 
-#### Mint smart-contracts:
+#### Mint smart contracts:
 
-There are three ways to mint new smart-contracts to the network of your TDA
+There are three ways to mint new smart contracts to the network of your program.
 
-* Collection Deployment | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L89) | – function of TDBs that allows you to mint new collections that will be put under the governance of TDBs.
+* Collection Deployment | [see code ↗](./contracts/blockchain_program.fc) | - function of `BlockchainProgram` that allows us to mint new collections under master governance.
 
-* NFT Item Deployment | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L107) | – You can deploy individual NFT Items in collections through TDBs. Message will pass through TDBs, then will be forwarded to the corresponding NFT Collection, that in its term will send a message to the empty address that will mint a new smart-contract of NFT.
+* NFT Item Deployment | [see code ↗](./contracts/blockchain_program.fc) | - We can deploy individual NFT items in collections through `BlockchainProgram`. Messages are forwarded to the corresponding NFT collection, which mints the NFT item contract.
 
-* Batch NFT Deploy | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L125) | – You can deploy multiple NFT with a single transaction.
+* Batch NFT Deploy | [see code ↗](./contracts/blockchain_program.fc) | - We can deploy multiple NFTs with a single transaction.
 
-#### Change code of smart-contracts:
+#### Change code of smart contracts:
 
-This methods will help you to upgrade the smart-contracts in your TDA:
+These methods help us to upgrade smart contracts in our program:
 
-* Edit dApp Code | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L67) | – You can upgrade the code of the main smart-contract (TDBs).
+* Edit Program Code | [see code ↗](./contracts/blockchain_program.fc) | - We can upgrade the code of the main smart contract (`BlockchainProgram`).
 
 * Edit Collection Code (coming soon)
 
@@ -65,11 +65,11 @@ This methods will help you to upgrade the smart-contracts in your TDA:
 
 #### Delete smart-contracts
 
-You can even implement functions that will allow you to burn tokens, such as:
+We can even implement functions that will allow us to burn tokens, such as:
 
-* Destroy SBT Item | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L188) | – You can burn SBT tokens in collections of SBT type. Message will pass through TDBs, then will be forwarded to the corresponding NFT Collection, that in its term will send a message to SBT Item to be burned.
+* Destroy SBT Item | [see code ↗](./contracts/blockchain_program.fc) | - We can burn SBT tokens in SBT collections via `BlockchainProgram`.
 
-* Delete dApp (coming soon)
+* Delete program (coming soon)
 
 * Delete NFT (coming soon)
 
@@ -77,101 +77,103 @@ You can even implement functions that will allow you to burn tokens, such as:
 
 ### Deal with Data
 
-TBDs provide functions to deal with data from your app.
+`BlockchainProgram` provides functions to work with program data.
 
 #### Store Data
 
-You can mint a new smart-contract to blockchain to store new data. So you can use methods for creating smart-contracts described in p. 3.1.1 for that purpose.
+We can mint a new smart contract to blockchain to store new data. So we can use methods for creating smart-contracts described in p. 3.1.1 for that purpose.
 
 #### Update Data
 
-You can take advantage of the Editable NFT Standard to update data in smart-contract by just editing it. You can use following methods for that purpose:
+We can take advantage of the Editable NFT Standard to update data in smart contract by just editing it. We can use following methods for that purpose:
 
-* Edit Collection Content | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L141) | – You can update content and metadata of NFT Collections through TDBs. It will forward the message to the corresponding collection.
+* Edit Collection Content | [see code ↗](./contracts/blockchain_program.fc) | - We can update content and metadata of NFT collections through `BlockchainProgram`.
 
-* Edit NFT Item Content | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L174) | – You can update content and metadata of NFT through TDBs. It will forward the message to the corresponding collection that in its term will forward the message to the NFT Item.
+* Edit NFT Item Content | [see code ↗](./contracts/blockchain_program.fc) | - We can update NFT content and metadata through `BlockchainProgram`.
 
 #### Retrieve Data
 
-* Use TDAs Get-Methods | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L368) | – In TDBt you will find methods that will allow you to get the current sequence number, get TDA data, get deployed collections addresses.
+* Use Program Get Methods | [see code ↗](./contracts/blockchain_program.fc) | - In Blockchain Program we can get the current sequence number, program data, and deployed collection addresses.
 
-* Use Collection Get-Methods | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/customers_collection.fc#L149) | – For example, in collections of freelancers you will find methods that will allow you to collect data, get NFT addresses by index, get royalty params, get NFT content.
+* Use Collection Get Methods | [see code ↗](./contracts/customers_collection.fc) | - For example, in freelancer/customer collections we can get item addresses by index, royalty params, and NFT content.
 
-* Use NFT Get-Methods | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/customers_nft.fc#L219) | – You can get NFT Content or the address of the editor by running NFT get-methods inherited from the NFT Standart.
+* Use NFT Get-Methods | [see code ↗](./contracts/customers_nft.fc) | - We can get NFT content or editor address using inherited NFT standard getters.
 
 #### Process Data (Coming soon)
 
-### Deal with App
+### Deal with Program
 
-Owners of TDA have additional functionality and opportunities to maintain, scale and improve the app.
+Program owners have additional functionality and opportunities to maintain, scale, and improve the program.
 
 #### Own & Benefit Securely
 
-Here are essential functions and opportunities for owners of the app:
+Here are essential functions and opportunities for owners of the program:
 
-* Change dApp Owner | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L48) | – You can change the owner of the TDA, for example, you can migrate from ordinary wallet to multisig wallet, or DAO smart-contract.
+* Change program Owner | [see code ↗](./contracts/blockchain_program.fc) | - owner change of `BlockchainProgram`, for example migrating from a regular wallet to multisig wallet, DAO contract or other solution.
 
-* Withdraw Funds | [see code ↗](https://github.com/HyperlinksSpace/tonnftdapp/blob/master/contracts/nft_dapp.fc#L57) | – You can withdraw funds to the address that is owner of the TDA
-Manage TDA Collectively – You can make a multisig or DAO smart-contract.
+* Withdraw Funds | [see code ↗](./contracts/blockchain_program.fc) | - We can withdraw funds to the owner address of `BlockchainProgram`.
 
-#### Upgrade TDA
+* Manage Program Collectively - We can use a multisig, DAO smart contract, any other solution.
 
-You can upgrade your app using methods described in p. 3.1.2.
+#### Upgrade Program
+
+We can upgrade our program using methods described in p. 3.1.2.
 
 #### Build UI
 
-You can build a serverless frontend for your TDA, using TON SDK’s. For example, you can use TON Connect demo app as a starting JS template.
+We can build a serverless frontend for your program using TON SDKs. For example, we can use TON Connect demo program as a starting JS template.
 
-### TDA Concept
+### Blockchain Program Concept
 
-Tokenized Decentralized App (TDA) is a novel approach that combines the advantages of Tokenized Decentralized Backend (TDB) with a serverless frontend. The core idea behind TDA is to enable seamless app functionality by extracting all necessary information from the TDB smart-contract network. By leveraging the capabilities of blockchain and smart contracts, TDA empowers developers to build robust, transparent, and decentralized applications.
+Blockchain Program is an approach that combines a tokenized blockchain architecture with a serverless frontend. The core idea is to enable program functionality by extracting required information directly from the `BlockchainProgram` smart-contract network.
 
-To illustrate the concept, let's consider an example of a freelance marketplace. With TDA, the app can retrieve real-time data by parsing the collection of freelance orders directly from the TDB smart-contract network. This allows for the dynamic generation of an actual list of available orders, eliminating the need for a centralized backend system. The TDA can extract and display relevant information such as order statuses, contractors, responsible freelancers, and more, providing users with up-to-date details.
+To illustrate the concept, consider a freelance marketplace. The program can retrieve real time data by parsing collections of freelance orders directly from the `BlockchainProgram` smart-contract network, eliminating the need for a centralized management.
 
-The interaction between the TDA and smart contracts is bidirectional. When users engage in various processes within the app, they can trigger changes in the corresponding smart contracts by sending messages or transactions. For instance, accepting an order or updating its status can be accomplished by interacting with the smart contract representing that specific order. These actions are transparent, auditable, and secure due to the immutability and consensus mechanisms of the underlying blockchain network.
+The interaction between the program and smart contracts is bidirectional. When users perform actions, they can trigger changes in corresponding smart contracts by sending messages or transactions.
 
-By tokenizing the app's functionalities and integrating them with the blockchain infrastructure, TDA introduces several benefits. Firstly, it ensures data integrity and immutability since the information is stored in blockchain. This enhances trust and eliminates the need for centralized intermediaries. Secondly, TDA leverages the decentralized nature of blockchain to create a resilient and censorship-resistant app ecosystem. It is no longer reliant on a single point of failure, reducing the vulnerability to hacking, downtime, or data breaches.
+By tokenizing program functionality and integrating it with blockchain infrastructure, Blockchain Program ensures data integrity and immutability, and reduces single points of failure.
 
-Moreover, TDA enables a more inclusive and collaborative environment by allowing users to participate directly in the governance and decision-making processes through smart contracts. Tokenized incentives can be implemented, rewarding users who contribute to the network with tokens for their computational resources, data sharing, or other valuable contributions.
+Moreover, this approach enables collaborative governance through smart contracts and tokenized incentives.
 
-In summary, TDA harnesses the power of Tokenized Decentralized Backend and combines it with a serverless frontend to create a new paradigm of decentralized application development. By leveraging smart contracts and blockchain technology, TDA offers enhanced transparency, security, and user empowerment. This innovative approach opens up a world of possibilities for building decentralized applications that are efficient, trustworthy, and resilient, with potential applications spanning various industries and sectors.
+In summary, Blockchain Program combines tokenized architecture with serverless frontend to support transparent, secure, and resilient blockchain programs.
 
 ## Repository Structure
 
-The managing file is [`nft_dapp.fc`](./contracts/nft_dapp.fc), which contains the implementation of the TON NFT dApp contract in FunC language.
+The managing file is [`blockchain_program.fc`](./contracts/blockchain_program.fc), which contains the implementation of the `BlockchainProgram` contract in FunC.
 
 Key directories:
 
-- [`contracts/`](./contracts/) - Core FunC smart contracts, including the top-level dApp contract and collection/item implementations.
+- [`contracts/`](./contracts/) - Core smart contracts, including the Blockchain Program contract and collection/item implementations.
 	- [`contracts/imports/`](./contracts/imports/) - Shared FunC libraries and helper modules imported by contracts.
 		- [`contracts/imports/test-libs/`](./contracts/imports/test-libs/) - Helper libraries used for low-level testing and message/storage validation.
 	- [`contracts/utils/`](./contracts/utils/) - Constants, op-codes, and low-level utility definitions used across contracts.
 - [`wrappers/`](./wrappers/) - TypeScript wrappers and compile configs for deploying and interacting with contracts.
+	- [`wrappers/BlockchainProgram.ts`](./wrappers/BlockchainProgram.ts) - TypeScript wrapper for the master contract (`BlockchainProgram` class, `BlockchainProgramConfig`).
+	- [`wrappers/BlockchainProgram.compile.ts`](./wrappers/BlockchainProgram.compile.ts) - Blueprint compiler config for `contracts/blockchain_program.fc` (used as `compile('BlockchainProgram')`).
 	- [`wrappers/utils/`](./wrappers/utils/) - Wrapper-side helper modules for content building, minting, and op-code utilities.
 - [`scripts/`](./scripts/) - Deployment and operational scripts for common contract management flows.
+	- [`scripts/deployBlockchainProgram.ts`](./scripts/deployBlockchainProgram.ts) - Deploys the Blockchain Program.
 - [`tests/`](./tests/) - Automated tests and test utilities used to validate contract behavior.
 	- [`tests/utils/`](./tests/utils/) - Test helper utilities (for example, random key generation) reused across specs.
 
-## Freelance-exchange implementation description
+## Freelance Exchange implementation description
 
-To build a freelance exchange dApp on the TON blockchain using NFT technology, you can leverage the master-contract and NFT collections provided by the TON NFT dApp repository. Here's how you can use this technology to create the freelance exchange dApp:
+To build a freelance exchange program, we can leverage the `BlockchainProgram` contract and NFT collections provided in this repository:
 
-1. **Deploying NFT Collections**: Using the master-contract from the repository, you can deploy NFT collections that will store the main assets of the freelance exchange dApp. For example, you can deploy NFT collections for orders, freelancers, employers, and admins. These collections will serve as units to store relevant data associated with each category.
+1. **Deploying NFT Collections**: Using the master-contract from the repository, we can deploy NFT collections that will store the main assets of the freelance exchange program. For example, we can deploy NFT collections for orders, freelancers, employers, and admins. These collections will serve as units to store relevant data associated with each category.
 
-2. **Storing Data as NFTs**: With the NFT collections deployed, you can use the NFTs to store the main data of the freelance exchange dApp. Each NFT within a collection represents a unique entity such as an order, a freelancer, an employer, or an admin. You can associate metadata with each NFT to store additional information about the entity, such as the freelancer's skills, the order details, or the employer's preferences.
+2. **Storing Data as NFTs**: With the NFT collections deployed, we can use the NFTs to store the main data of the freelance exchange program. Each NFT within a collection represents unique entity such as order, freelancer, employer or admin. You can associate metadata with each NFT to store additional information about the entity, such as the freelancer's skills, order details or the employer's preferences.
 
-3. **Master-Contract Ownership and Editing**: The master-contract becomes the owner and editor of all the deployed NFT collections. As the owner and editor, the master-contract has the authority to initiate the minting of NFTs and edit their attributes. This allows for the maintenance of up-to-date data on the blockchain. For example, when the status of an order changes, the freelance exchange dApp can send a request to the master-contract to update the corresponding NFT's status attribute.
+3. **Contract Ownership and Editing**: `BlockchainProgram` becomes the owner and editor of deployed NFT collections. As owner and editor, it can initiate minting and edit attributes to keep data up to date onchain.
 
-4. **Data Updates via Master-Contract**: When a change occurs in the freelance exchange dApp, such as the status of an order or the details of a freelancer, the dApp can interact with the master-contract to request the necessary updates. The dApp can send a message to the master-contract, specifying the NFT and the attribute to be edited. The master-contract then processes the request and updates the corresponding NFT attribute accordingly.
+4. **Data Updates**: When program state changes, the program can send messages to `BlockchainProgram`, which processes and routes updates to the corresponding NFT attribute.
 
-5. **Blockchain-based Data Storage**: By utilizing NFTs and storing data on the TON blockchain, the freelance exchange dApp ensures that the important information, such as order statuses, freelancer details, and employer preferences, are securely stored and tamper-resistant. The data is kept on-chain, allowing for transparency and immutability.
+5. **Blockchain Based Data Storage**: By utilizing NFTs and storing data on the TON blockchain, the freelance exchange program ensures that the important information, such as order statuses, freelancer details, and employer preferences, are securely stored and tamper resistant. The data is kept onchain, allowing for transparency and immutability.
 
-6. **Additional Functionality**: In addition to the core functionality of storing and updating data, you can enhance the freelance exchange dApp by adding features such as NFT transfers between users, tracking transaction history, implementing payment mechanisms using blockchain tokens, and creating a user-friendly front-end interface to interact with the dApp.
+6. **Additional Functionality**: In addition to the core functionality of storing and updating data, we can enhance the freelance exchange program by adding features such as NFT transfers between users, tracking transaction history, implementing payment mechanisms using blockchain tokens, and creating a user friendly frontend interface to interact with the program.
 
-By using the NFT technology provided by the TON NFT dApp repository, you can create a decentralized freelance exchange dApp on the TON blockchain. This approach allows for the storage of key data as NFTs and leverages the master-contract's ownership and editing capabilities to maintain and update the data on-chain, ensuring transparency and reliability within the freelance exchange ecosystem.
+By using NFT technology and the `BlockchainProgram` architecture from this repository, we can create a blockchain freelance exchange while keeping key data transparent and auditable on-chain.
 
-## Contributing
+## Blackpaper
 
-Contributions to the TON NFT dApp contract are welcome!
-
-Read full description in [`Blackpaper.md`](./blackpaper/Blackpaper.md).
+Read [`Blackpaper.md`](./blackpaper/Blackpaper.md) for more information and to contribute to this solution.

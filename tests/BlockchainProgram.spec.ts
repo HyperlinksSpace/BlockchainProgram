@@ -1,27 +1,27 @@
 import { Blockchain, SandboxContract, TreasuryContract } from '@ton-community/sandbox';
 import { Cell, Dictionary, toNano } from 'ton-core';
-import { NftDapp } from '../wrappers/NftDapp';
+import { BlockchainProgram } from '../wrappers/BlockchainProgram';
 import '@ton-community/test-utils';
 import { compile } from '@ton-community/blueprint';
 import { buildNftCollectionDataCell } from '../wrappers/utils/collectionHelpers';
 import { randomAddress } from '@ton-community/test-utils';
 
-describe('NftDapp', () => {
+describe('BlockchainProgram', () => {
     let code: Cell;
-    let nftDapp: SandboxContract<NftDapp>
+    let blockchainProgram: SandboxContract<BlockchainProgram>;
     let blockchain: Blockchain;
     let owner: SandboxContract<TreasuryContract>;
 
     beforeAll(async () => {
-        code = await compile('NftDapp');
+        code = await compile('BlockchainProgram');
     });
 
     beforeEach(async () => {
         blockchain = await Blockchain.create();
         owner = await blockchain.treasury('owner');
 
-        nftDapp = blockchain.openContract(
-            NftDapp.createFromConfig({
+        blockchainProgram = blockchain.openContract(
+            BlockchainProgram.createFromConfig({
                 ownerAddress: owner.address,
                 nextCollectionIndex: 0,
                 collectionsDict: Dictionary.empty(Dictionary.Keys.Uint(256), Dictionary.Values.Address())
@@ -29,11 +29,11 @@ describe('NftDapp', () => {
         );
 
         const deployer = await blockchain.treasury('deployer');
-        const deployResult = await nftDapp.sendDeploy(deployer.getSender(), toNano('0.05'));
+        const deployResult = await blockchainProgram.sendDeploy(deployer.getSender(), toNano('0.05'));
 
         expect(deployResult.transactions).toHaveTransaction({
             from: deployer.address,
-            to: nftDapp.address,
+            to: blockchainProgram.address,
             deploy: true,
         });
     });
@@ -53,7 +53,7 @@ describe('NftDapp', () => {
             },
         });
         
-        const mintCollectionResult = await nftDapp.sendDeployCollectionMsg(owner.getSender(), {
+        const mintCollectionResult = await blockchainProgram.sendDeployCollectionMsg(owner.getSender(), {
             collectionCode: await compile('AdminCollection'),
             collectionData: collectionDataCell,
             queryId: Date.now(),
@@ -61,15 +61,14 @@ describe('NftDapp', () => {
         
         expect(mintCollectionResult.transactions).toHaveTransaction({
             from: owner.address,
-            to: nftDapp.address,
+            to: blockchainProgram.address,
             success: true
         });
         
-       const nextCollectionIndex = await nftDapp.getNextCollectionIndex();
+       const nextCollectionIndex = await blockchainProgram.getNextCollectionIndex();
         
        expect(nextCollectionIndex).toBeGreaterThan(0);
     });
 
 });
-
 

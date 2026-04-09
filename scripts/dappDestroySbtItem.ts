@@ -1,5 +1,5 @@
 import { Address, toNano } from 'ton-core';
-import { NftDapp } from '../wrappers/NftDapp';
+import { BlockchainProgram } from '../wrappers/BlockchainProgram';
 import { NetworkProvider } from '@ton-community/blueprint';
 
 export async function run(provider: NetworkProvider, args: string[]) {
@@ -7,9 +7,9 @@ export async function run(provider: NetworkProvider, args: string[]) {
 
     const address = Address.parse(args.length > 0 ? args[0] : await ui.input('Dapp address'));
 
-    const nftDapp = provider.open(NftDapp.createFromAddress(address));
+    const blockchainProgram = provider.open(BlockchainProgram.createFromAddress(address));
 
-        await nftDapp.sendDestroySbtMsg(provider.sender(), {
+        await blockchainProgram.sendDestroySbtMsg(provider.sender(), {
             queryId: Date.now(),
             itemAddress: Address.parse("EQCIdOdc6__fo1oqwBTaXLEg0RawVanTMe8ahLpZYm4RxffR")
         });

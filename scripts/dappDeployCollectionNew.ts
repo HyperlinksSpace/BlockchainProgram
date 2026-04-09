@@ -1,4 +1,4 @@
-import { NftDapp } from '../wrappers/NftDapp';
+import { BlockchainProgram } from '../wrappers/BlockchainProgram';
 import { compile, NetworkProvider } from '@ton-community/blueprint';
 import { Address } from 'ton-core';
 import { buildNftCollectionDataCell } from '../wrappers/utils/collectionHelpers';
@@ -10,7 +10,7 @@ export async function run(provider: NetworkProvider, args: string[]) {
 
     const address = Address.parse(args.length > 0 ? args[0] : await ui.input('Dapp address'));
 
-    const nftDapp = provider.open(NftDapp.createFromAddress(address));
+    const blockchainProgram = provider.open(BlockchainProgram.createFromAddress(address));
 
     const collectionDataCell = buildNftCollectionDataCell({
       ownerAddress: address, 
@@ -25,7 +25,7 @@ export async function run(provider: NetworkProvider, args: string[]) {
       }
   });
 
-    await nftDapp.sendDeployCollectionMsg(provider.sender(), {
+    await blockchainProgram.sendDeployCollectionMsg(provider.sender(), {
         collectionCode: await compile('AdminCollection'),
         collectionData: collectionDataCell,
         queryId: Date.now(),
